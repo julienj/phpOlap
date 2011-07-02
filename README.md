@@ -9,6 +9,8 @@ phpOlap can be used to explore schema (cubes, dimensions, hierarchies, levels, .
 phpOlap is only supported on PHP 5.3.2 and up.
 
 
+API : http://phpolap.org/
+
 Schema exploration
 ----------------
 
