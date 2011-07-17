@@ -93,6 +93,18 @@ interface ConnectionInterface {
      */
 	public function findDatabases(Array $propertyList = null, Array $restrictionList = null);
 
+    /**
+      * find one database
+      *
+      * @param Array $propertyList Proterty list
+      * @param Array $restrictionList Restriction list
+ 	 *
+      * @return Database object
+      *
+      */
+ 	public function findOneDatabase(Array $propertyList = null, Array $restrictionList = null);
+
+
    /**
      * find catalogs
      *
@@ -103,6 +115,17 @@ interface ConnectionInterface {
      *
      */
 	public function findCatalogs(Array $propertyList = null, Array $restrictionList = null);
+
+    /**
+      * find one catalog
+      *
+      * @param Array $propertyList Proterty list
+      * @param Array $restrictionList Restriction list
+ 	 *
+      * @return Catalog object
+      *
+      */
+ 	public function findOneCatalog(Array $propertyList = null, Array $restrictionList = null);
 
    /**
      * find schema
@@ -115,16 +138,40 @@ interface ConnectionInterface {
      */
 	public function findSchemas(Array $propertyList = null, Array $restrictionList = null);
 
+    /**
+      * find one schema
+      *
+      * @param Array $propertyList Proterty list
+      * @param Array $restrictionList Restriction list
+ 	 *
+      * @return Schema object
+      *
+      */
+ 	public function findOneSchema(Array $propertyList = null, Array $restrictionList = null);
+
+
    /**
      * find cubes
      *
      * @param Array $propertyList Proterty list
      * @param Array $restrictionList Restriction list
 	 *
-     * @return Array Cube objects collection
+     * @return Array Cube object collection
      *
      */
 	public function findCubes(Array $propertyList = null, Array $restrictionList = null);
+
+    /**
+      * find one cube
+      *
+      * @param Array $propertyList Proterty list
+      * @param Array $restrictionList Restriction list
+ 	 *
+      * @return Cube object
+      *
+      */
+ 	public function findOneCube(Array $propertyList = null, Array $restrictionList = null);
+
 
    /**
      * find dimensions
@@ -137,6 +184,18 @@ interface ConnectionInterface {
      */
 	public function findDimensions(Array $propertyList = null, Array $restrictionList = null);
 
+    /**
+      * find one dimension
+      *
+      * @param Array $propertyList Proterty list
+      * @param Array $restrictionList Restriction list
+ 	 *
+      * @return Dimension object
+      *
+      */
+ 	public function findOneDimension(Array $propertyList = null, Array $restrictionList = null);
+
+
    /**
      * find hierarchies
      *
@@ -147,6 +206,18 @@ interface ConnectionInterface {
      *
      */
 	public function findHierarchies(Array $propertyList = null, Array $restrictionList = null);
+
+    /**
+      * find one hierarchy
+      *
+      * @param Array $propertyList Proterty list
+      * @param Array $restrictionList Restriction list
+ 	 *
+      * @return Hierarchy object
+      *
+      */
+ 	public function findOneHierarchy(Array $propertyList = null, Array $restrictionList = null);
+
 
    /**
      * find levels
@@ -159,6 +230,18 @@ interface ConnectionInterface {
      */
 	public function findLevels(Array $propertyList = null, Array $restrictionList = null);
 
+    /**
+      * find one level
+      *
+      * @param Array $propertyList Proterty list
+      * @param Array $restrictionList Restriction list
+ 	 *
+      * @return Level object
+      *
+      */
+ 	public function findOneLevel(Array $propertyList = null, Array $restrictionList = null);
+
+
    /**
      * find members
      *
@@ -170,6 +253,18 @@ interface ConnectionInterface {
      */
 	public function findMembers(Array $propertyList = null, Array $restrictionList = null);
 
+    /**
+      * find one member
+      *
+      * @param Array $propertyList Proterty list
+      * @param Array $restrictionList Restriction list
+ 	 *
+      * @return Member object
+      *
+      */
+ 	public function findOneMember(Array $propertyList = null, Array $restrictionList = null);
+
+
    /**
      * find measures
      *
@@ -180,6 +275,17 @@ interface ConnectionInterface {
      *
      */
 	public function findMeasures(Array $propertyList = null, Array $restrictionList = null);
+
+    /**
+      * find one measure
+      *
+      * @param Array $propertyList Proterty list
+      * @param Array $restrictionList Restriction list
+ 	 *
+      * @return Measure object
+      *
+      */
+ 	public function findOneMeasure(Array $propertyList = null, Array $restrictionList = null);
 
    /**
      * execute statement

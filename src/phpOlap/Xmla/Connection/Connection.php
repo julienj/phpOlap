@@ -12,6 +12,7 @@ namespace phpOlap\Xmla\Connection;
 
 use phpOlap\Xmla\Connection\ConnectionInterface;
 use phpOlap\Xmla\Connection\Adaptator\AdaptatorInterface;
+use phpOlap\Xmla\Connection\Adaptator\AdaptatorException;
 
 use phpOlap\Xmla\Metadata\Database;
 use phpOlap\Xmla\Metadata\Catalog;
@@ -60,8 +61,7 @@ class Connection  implements ConnectionInterface
 	public function getActivDatabase()
 	{
 		if (!$this->activDatabase) {
-			$databases = $this->findDatabases();
-			$this->activDatabase = $databases[0];
+			$this->activDatabase = $this->findOneDatabase();
 		}
 		return $this->activDatabase;
 	}
@@ -80,8 +80,7 @@ class Connection  implements ConnectionInterface
 	public function getActivCatalog()
 	{
 		if (!$this->activCatalog) {
-			$catalogs = $this->findCatalogs();
-			$this->activCatalog = $catalogs[0];
+			$this->activCatalog = $this->findOneCatalog();
 		}
 		return $this->activCatalog;
 	}
@@ -100,8 +99,7 @@ class Connection  implements ConnectionInterface
 	public function getActivSchema()
 	{
 		if (!$this->activSchema) {
-			$schemas = $this->findSchemas();
-			$this->activSchema = $schemas[0];
+			$this->activSchema = $this->findOneSchema();
 		}
 		return $this->activSchema;
 	}
@@ -124,7 +122,16 @@ class Connection  implements ConnectionInterface
 		
 		return $this->hydrate($result, 'phpOlap\Xmla\Metadata\Database');
 	}
-	
+
+    /**
+     * {@inheritdoc}
+     */
+	public function findOneDatabase(Array $propertyList = null, Array $restrictionList = null)
+	{
+		$databases = $this->findDatabases($propertyList, $restrictionList);
+		return isset($databases[0]) ? $databases[0] : null;	
+	}
+
     /**
      * {@inheritdoc}
      */
@@ -137,6 +144,15 @@ class Connection  implements ConnectionInterface
 		
 		return $this->hydrate($result, 'phpOlap\Xmla\Metadata\Catalog');
 	}
+
+    /**
+     * {@inheritdoc}
+     */
+	public function findOneCatalog(Array $propertyList = null, Array $restrictionList = null)
+	{
+		$catalogs = $this->findCatalogs($propertyList, $restrictionList);
+		return isset($catalogs[0]) ? $catalogs[0] : null;	
+	}
 	
     /**
      * {@inheritdoc}
@@ -147,9 +163,22 @@ class Connection  implements ConnectionInterface
 		$propertyList = self::setDefault('DataSourceInfo', $this->getActivDatabase()->getDataSourceInfo(), $propertyList);
 		$propertyList = self::setDefault('Catalog', $this->getActivCatalog()->getName(), $propertyList);
 		
-		$result = $this->getSoapAdaptator()->discover('DBSCHEMA_SCHEMATA', $propertyList, $restrictionList);
-		
-		return $this->hydrate($result, 'phpOlap\Xmla\Metadata\Schema');
+		try{
+		    $result = $this->getSoapAdaptator()->discover('DBSCHEMA_SCHEMATA', $propertyList, $restrictionList);		    
+		    return $this->hydrate($result, 'phpOlap\Xmla\Metadata\Schema');
+		} catch(AdaptatorException $e){
+		    // if mssql
+		    return array();
+		}
+	}
+	
+    /**
+     * {@inheritdoc}
+     */
+	public function findOneSchema(Array $propertyList = null, Array $restrictionList = null)
+	{
+		$schemas = $this->findSchemas($propertyList, $restrictionList);
+		return isset($schemas[0]) ? $schemas[0] : null;	
 	}
 	
     /**
@@ -160,13 +189,24 @@ class Connection  implements ConnectionInterface
 		$propertyList = self::setDefault('Format', 'Tabular', $propertyList);
 		$propertyList = self::setDefault('DataSourceInfo', $this->getActivDatabase()->getDataSourceInfo(), $propertyList);
 		$propertyList = self::setDefault('Catalog', $this->getActivCatalog()->getName(), $propertyList);
-		$restrictionList = self::setDefault('SCHEMA_NAME', $this->getActivSchema()->getName(), $restrictionList);
+		if ($this->getActivSchema()) {
+            $restrictionList = self::setDefault('SCHEMA_NAME', $this->getActivSchema()->getName(), $restrictionList);
+        }
 		
 		$result = $this->getSoapAdaptator()->discover('MDSCHEMA_CUBES', $propertyList, $restrictionList);
 		
 		return $this->hydrate($result, 'phpOlap\Xmla\Metadata\Cube');
 	}
-	
+
+    /**
+     * {@inheritdoc}
+     */
+	public function findOneCube(Array $propertyList = null, Array $restrictionList = null)
+	{
+		$cubes = $this->findCubes($propertyList, $restrictionList);
+		return isset($cubes[0]) ? $cubes[0] : null;	
+	}
+
     /**
      * {@inheritdoc}
      */
@@ -175,13 +215,24 @@ class Connection  implements ConnectionInterface
 		$propertyList = self::setDefault('Format', 'Tabular', $propertyList);
 		$propertyList = self::setDefault('DataSourceInfo', $this->getActivDatabase()->getDataSourceInfo(), $propertyList);
 		$propertyList = self::setDefault('Catalog', $this->getActivCatalog()->getName(), $propertyList);
-		$restrictionList = self::setDefault('SCHEMA_NAME', $this->getActivSchema()->getName(), $restrictionList);
+		if ($this->getActivSchema()) {
+            $restrictionList = self::setDefault('SCHEMA_NAME', $this->getActivSchema()->getName(), $restrictionList);
+        }
 		
 		$result = $this->getSoapAdaptator()->discover('MDSCHEMA_DIMENSIONS', $propertyList, $restrictionList);
 		
 		return $this->hydrate($result, 'phpOlap\Xmla\Metadata\Dimension');
 	}	
-	
+
+    /**
+     * {@inheritdoc}
+     */
+	public function findOneDimension(Array $propertyList = null, Array $restrictionList = null)
+	{
+		$dimensions = $this->findDimensions($propertyList, $restrictionList);
+		return isset($dimensions[0]) ? $dimensions[0] : null;	
+	}
+
     /**
      * {@inheritdoc}
      */
@@ -190,13 +241,25 @@ class Connection  implements ConnectionInterface
 		$propertyList = self::setDefault('Format', 'Tabular', $propertyList);
 		$propertyList = self::setDefault('DataSourceInfo', $this->getActivDatabase()->getDataSourceInfo(), $propertyList);
 		$propertyList = self::setDefault('Catalog', $this->getActivCatalog()->getName(), $propertyList);
-		$restrictionList = self::setDefault('SCHEMA_NAME', $this->getActivSchema()->getName(), $restrictionList);
+		if ($this->getActivSchema()) {
+            $restrictionList = self::setDefault('SCHEMA_NAME', $this->getActivSchema()->getName(), $restrictionList);
+        }
 		
 		$result = $this->getSoapAdaptator()->discover('MDSCHEMA_HIERARCHIES', $propertyList, $restrictionList);
 		
 		return $this->hydrate($result, 'phpOlap\Xmla\Metadata\Hierarchy');
 	}
-	
+
+    /**
+     * {@inheritdoc}
+     */
+	public function findOneHierarchy(Array $propertyList = null, Array $restrictionList = null)
+	{
+		$hierarchies = $this->findHierarchies($propertyList, $restrictionList);
+		return isset($hierarchies[0]) ? $hierarchies[0] : null;	
+	}
+
+
     /**
      * {@inheritdoc}
      */
@@ -205,13 +268,24 @@ class Connection  implements ConnectionInterface
 		$propertyList = self::setDefault('Format', 'Tabular', $propertyList);
 		$propertyList = self::setDefault('DataSourceInfo', $this->getActivDatabase()->getDataSourceInfo(), $propertyList);
 		$propertyList = self::setDefault('Catalog', $this->getActivCatalog()->getName(), $propertyList);
-		$restrictionList = self::setDefault('SCHEMA_NAME', $this->getActivSchema()->getName(), $restrictionList);
+		if ($this->getActivSchema()) {
+            $restrictionList = self::setDefault('SCHEMA_NAME', $this->getActivSchema()->getName(), $restrictionList);
+        }
 		
 		$result = $this->getSoapAdaptator()->discover('MDSCHEMA_LEVELS', $propertyList, $restrictionList);
 		
 		return $this->hydrate($result, 'phpOlap\Xmla\Metadata\Level');
 	}
-	
+
+    /**
+     * {@inheritdoc}
+     */
+	public function findOneLevel(Array $propertyList = null, Array $restrictionList = null)
+	{
+		$levels = $this->findLevels($propertyList, $restrictionList);
+		return isset($levels[0]) ? $levels[0] : null;	
+	}
+
     /**
      * {@inheritdoc}
      */
@@ -220,13 +294,24 @@ class Connection  implements ConnectionInterface
 		$propertyList = self::setDefault('Format', 'Tabular', $propertyList);
 		$propertyList = self::setDefault('DataSourceInfo', $this->getActivDatabase()->getDataSourceInfo(), $propertyList);
 		$propertyList = self::setDefault('Catalog', $this->getActivCatalog()->getName(), $propertyList);
-		$restrictionList = self::setDefault('SCHEMA_NAME', $this->getActivSchema()->getName(), $restrictionList);
+		if ($this->getActivSchema()) {
+            $restrictionList = self::setDefault('SCHEMA_NAME', $this->getActivSchema()->getName(), $restrictionList);
+        }
 		
 		$result = $this->getSoapAdaptator()->discover('MDSCHEMA_MEMBERS', $propertyList, $restrictionList);
 		
 		return $this->hydrate($result, 'phpOlap\Xmla\Metadata\Member');
 	}
-	
+
+    /**
+     * {@inheritdoc}
+     */
+	public function findOneMember(Array $propertyList = null, Array $restrictionList = null)
+	{
+		$members = $this->findLevels($propertyList, $restrictionList);
+		return isset($members[0]) ? $members[0] : null;	
+	}
+
     /**
      * {@inheritdoc}
      */
@@ -235,14 +320,24 @@ class Connection  implements ConnectionInterface
 		$propertyList = self::setDefault('Format', 'Tabular', $propertyList);
 		$propertyList = self::setDefault('DataSourceInfo', $this->getActivDatabase()->getDataSourceInfo(), $propertyList);
 		$propertyList = self::setDefault('Catalog', $this->getActivCatalog()->getName(), $propertyList);
-		$restrictionList = self::setDefault('SCHEMA_NAME', $this->getActivSchema()->getName(), $restrictionList);
+		if ($this->getActivSchema()) {
+            $restrictionList = self::setDefault('SCHEMA_NAME', $this->getActivSchema()->getName(), $restrictionList);
+        }
 		
 		$result = $this->getSoapAdaptator()->discover('MDSCHEMA_MEASURES', $propertyList, $restrictionList);
 		
 		return $this->hydrate($result, 'phpOlap\Xmla\Metadata\Measure');
 	}
 
-
+    /**
+     * {@inheritdoc}
+     */
+	public function findOneMeasure(Array $propertyList = null, Array $restrictionList = null)
+	{
+		$measures = $this->findMeasures($propertyList, $restrictionList);
+		return isset($measures[0]) ? $measures[0] : null;	
+	}
+	
     /**
      * {@inheritdoc}
      */
