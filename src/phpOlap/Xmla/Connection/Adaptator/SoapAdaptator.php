@@ -34,14 +34,19 @@ class SoapAdaptator extends SoapClient implements AdaptatorInterface
      *
      * @param String $uri Xmla uris
      */	
-	public function __construct($url)
+	public function __construct($url, $login = null, $password = null)
 	{
 		$this->url = $url;
 		
-		$this->client = parent::__construct(NULL, array(
-			"location"	=>	$url,
-			"uri"		=>	"urn:schemas-microsoft-com:xml-analysis"
-		));;
+		$params = array();
+		$params['location'] = $url;
+		$params['uri'] = 'http://schemas.xmlsoap.org/soap/envelope/';
+		
+		if ($login && $password) {
+    		$params['login'] = $login;
+    		$params['password'] = $password;
+		}
+		$this->client = parent::__construct(NULL, $params);
 	}
 
    /**
@@ -56,9 +61,18 @@ class SoapAdaptator extends SoapClient implements AdaptatorInterface
      */
 	public function discover($requestType, Array $propertyList, Array $restrictionList = null)
 	{
-		$xml = new \DOMDocument();
+		$xml = new \DOMDocument('1.0', 'UTF-8');
+		
+		$envelope = $xml->createElement("Envelope");
+		$envelope->setAttribute("xmlns", "http://schemas.xmlsoap.org/soap/envelope/");
+		
+		$body = $xml->createElement("Body");
+		$envelope->appendChild($body);	
+		
 		$discover = $xml->createElement("Discover");
 		$discover->setAttribute("xmlns", "urn:schemas-microsoft-com:xml-analysis");
+		
+		$body->appendChild($discover);
 		
 		$requestTypeNode = $this->createNode($xml, "RequestType", $requestType);
 		$discover->appendChild($requestTypeNode);
@@ -73,7 +87,7 @@ class SoapAdaptator extends SoapClient implements AdaptatorInterface
 		$propertiesNode->appendChild($propertyListNode);
 		$discover->appendChild($propertiesNode);
 		
-		$xml->appendChild($discover);
+		$xml->appendChild($envelope);
 		
 		return $this->call($xml, 'Discover');
 	
@@ -90,9 +104,18 @@ class SoapAdaptator extends SoapClient implements AdaptatorInterface
      */
 	public function execute($statement, Array $propertyList)
 	{
-		$xml = new \DOMDocument();
+		$xml = new \DOMDocument('1.0', 'UTF-8');
+
+		$envelope = $xml->createElement("Envelope");
+		$envelope->setAttribute("xmlns", "http://schemas.xmlsoap.org/soap/envelope/");
+		
+		$body = $xml->createElement("Body");
+		$envelope->appendChild($body);
+
 		$execute = $xml->createElement("Execute");
 		$execute->setAttribute("xmlns", "urn:schemas-microsoft-com:xml-analysis");
+		
+		$body->appendChild($execute);
 		
 		$commandNode = $xml->createElement("Command");
 		$statementNode = $this->createNode($xml, "Statement", $statement);
@@ -106,7 +129,7 @@ class SoapAdaptator extends SoapClient implements AdaptatorInterface
 			$execute->appendChild($propertiesNode);
 		}
 		
-		$xml->appendChild($execute);
+		$xml->appendChild($envelope);
 		
 		return $this->call($xml, 'Execute');
 	}
@@ -122,21 +145,17 @@ class SoapAdaptator extends SoapClient implements AdaptatorInterface
      */
 	protected function call(\DOMDocument $request, $action)
 	{
-		$resultSoap = $this->__doRequest($request->saveXML(), $this->url,  $action, 1);	
-
+		$resultSoap = $this->__doRequest($request->saveXML(), $this->url,  $action, 1.1);	
 		if (!$resultSoap) {
-			throw new AdaptatorException('SOAP error : no result');
+			throw new AdaptatorException('SOAP error : no response');
 		}
-
 		$result = new \DOMDocument();
 		$result->loadXML($resultSoap);
 		
 		$error = $result->getElementsByTagName('Fault');
 		if ($error->length > 0) {
-			
 			$faultstring = $error->item(0)->getElementsByTagName('faultstring')->item(0)->nodeValue;
-			$faultsDesc = $error->item(0)->getElementsByTagName('desc')->item(0)->nodeValue;
-			throw new AdaptatorException(sprintf('XMLA error : %s (%s)', $faultstring, $faultsDesc));
+			throw new AdaptatorException(sprintf('XMLA error : %s', $faultstring));
 		}
 		
 		$this->requestsHistory[] = $request->saveXml();

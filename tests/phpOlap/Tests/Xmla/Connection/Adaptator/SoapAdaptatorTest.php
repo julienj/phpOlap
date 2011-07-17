@@ -32,22 +32,26 @@ class SoapAdaptatorTest extends \PHPUnit_Framework_TestCase
 					'CUBE_NAME' => 'Sales'
 				)
 			);
-		$result = '<Discover xmlns="urn:schemas-microsoft-com:xml-analysis">' .
-				    '<RequestType>MDSCHEMA_DIMENSIONS</RequestType>' .
-				    '<Restrictions>' .
-				      '<RestrictionList>' .
-				        '<CATALOG_NAME>FoodMart</CATALOG_NAME>' .
-				        '<CUBE_NAME>Sales</CUBE_NAME>' .
-				      '</RestrictionList>' .
-				    '</Restrictions>' .
-				    '<Properties>' .
-				      '<PropertyList>' .
-				        '<DataSourceInfo>Provider=Mondrian;DataSource=MondrianFoodMart;</DataSourceInfo>' .
-				        '<Catalog>FoodMart</Catalog>' .
-				        '<Format>Tabular</Format>' .
-				      '</PropertyList>' .
-				    '</Properties>' .
-				  '</Discover>';
+		$result = '<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/">' .
+                    '<Body>' .
+                      '<Discover xmlns="urn:schemas-microsoft-com:xml-analysis">' .
+                        '<RequestType>MDSCHEMA_DIMENSIONS</RequestType>' .
+                        '<Restrictions>' .
+                          '<RestrictionList>' .
+                            '<CATALOG_NAME>FoodMart</CATALOG_NAME>' .
+                            '<CUBE_NAME>Sales</CUBE_NAME>' .
+                          '</RestrictionList>' .
+                        '</Restrictions>' .
+                        '<Properties>' .
+                          '<PropertyList>' .
+                            '<DataSourceInfo>Provider=Mondrian;DataSource=MondrianFoodMart;</DataSourceInfo>' .
+                            '<Catalog>FoodMart</Catalog>' .
+                            '<Format>Tabular</Format>' .
+                          '</PropertyList>' .
+                        '</Properties>' .
+                      '</Discover>' .
+                    '</Body>' .
+                    '</Envelope>';
 		
         $this->compareXml($test, $result); 
     }
@@ -65,20 +69,24 @@ class SoapAdaptatorTest extends \PHPUnit_Framework_TestCase
 					'Format' =>'Tabular'
 				)
 			);
-		$result = '<Discover xmlns="urn:schemas-microsoft-com:xml-analysis">' .
-				    '<RequestType>MDSCHEMA_DIMENSIONS</RequestType>' .
-				    '<Restrictions>' .
-				      '<RestrictionList>' .
-				      '</RestrictionList>' .
-				    '</Restrictions>' .
-				    '<Properties>' .
-				      '<PropertyList>' .
-				        '<DataSourceInfo>Provider=Mondrian;DataSource=MondrianFoodMart;</DataSourceInfo>' .
-				        '<Catalog>FoodMart</Catalog>' .
-				        '<Format>Tabular</Format>' .
-				      '</PropertyList>' .
-				    '</Properties>' .
-				  '</Discover>';
+		$result = '<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/">' .
+                    '<Body>' .
+                      '<Discover xmlns="urn:schemas-microsoft-com:xml-analysis">' .
+    				    '<RequestType>MDSCHEMA_DIMENSIONS</RequestType>' .
+    				    '<Restrictions>' .
+    				      '<RestrictionList>' .
+    				      '</RestrictionList>' .
+    				    '</Restrictions>' .
+    				    '<Properties>' .
+    				      '<PropertyList>' .
+    				        '<DataSourceInfo>Provider=Mondrian;DataSource=MondrianFoodMart;</DataSourceInfo>' .
+    				        '<Catalog>FoodMart</Catalog>' .
+    				        '<Format>Tabular</Format>' .
+    				      '</PropertyList>' .
+    				    '</Properties>' .
+            		  '</Discover>' .
+            		 '</Body>' .
+            		'</Envelope>';
 		
         $this->compareXml($test, $result); 
     }
@@ -98,21 +106,25 @@ class SoapAdaptatorTest extends \PHPUnit_Framework_TestCase
 					'CUBE_NAME' => 'Sales'
 				)
 			);
-		$result = '<Discover xmlns="urn:schemas-microsoft-com:xml-analysis">' .
-				    '<RequestType>MDSCHEMA_DIMENSIONS</RequestType>' .
-				    '<Restrictions>' .
-				      '<RestrictionList>' .
-				        '<CUBE_NAME>Sales</CUBE_NAME>' .
-				      '</RestrictionList>' .
-				    '</Restrictions>' .
-				    '<Properties>' .
-				      '<PropertyList>' .
-				        '<DataSourceInfo>Provider=Mondrian;DataSource=MondrianFoodMart;</DataSourceInfo>' .
-				        '<Catalog>FoodMart</Catalog>' .
-				        '<Format>Tabular</Format>' .
-				      '</PropertyList>' .
-				    '</Properties>' .
-				  '</Discover>';
+		$result = '<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/">' .
+                    '<Body>' .
+                      '<Discover xmlns="urn:schemas-microsoft-com:xml-analysis">' .
+    				    '<RequestType>MDSCHEMA_DIMENSIONS</RequestType>' .
+    				    '<Restrictions>' .
+    				      '<RestrictionList>' .
+    				        '<CUBE_NAME>Sales</CUBE_NAME>' .
+    				      '</RestrictionList>' .
+    				    '</Restrictions>' .
+    				    '<Properties>' .
+    				      '<PropertyList>' .
+    				        '<DataSourceInfo>Provider=Mondrian;DataSource=MondrianFoodMart;</DataSourceInfo>' .
+    				        '<Catalog>FoodMart</Catalog>' .
+    				        '<Format>Tabular</Format>' .
+    				      '</PropertyList>' .
+    				    '</Properties>' .
+            		  '</Discover>' .
+            		 '</Body>' .
+            		'</Envelope>';
 		
         $this->compareXml($test, $result); 
     }
@@ -131,21 +143,25 @@ class SoapAdaptatorTest extends \PHPUnit_Framework_TestCase
 					'AxisFormat' =>'TupleFormat'
 				)
 			);
-		$result = '<Execute xmlns="urn:schemas-microsoft-com:xml-analysis">' .
-					  '<Command>' .
-					    '<Statement>' .
-					      'SELECT {[Measures].[Org Salary]} ON columns, Hierarchize(Union({[Employees].[All Employees]}, [Employees].[All Employees].Children)) ON rows FROM HR WHERE ([Time].[1997])' .
-					    '</Statement>' .
-					  '</Command>' .
-					  '<Properties>' .
-					    '<PropertyList>' .
-					      '<Catalog>FoodMart</Catalog>' .
-					      '<DataSourceInfo>Provider=Mondrian;DataSource=MondrianFoodMart;</DataSourceInfo>' .
-					      '<Format>Multidimensional</Format>' .
-					      '<AxisFormat>TupleFormat</AxisFormat>' .
-					    '</PropertyList>' .
-					  '</Properties>' .
-					'</Execute>';
+		$result = '<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/">' .
+                    '<Body>' .
+                      '<Execute xmlns="urn:schemas-microsoft-com:xml-analysis">' .
+    					  '<Command>' .
+    					    '<Statement>' .
+    					      'SELECT {[Measures].[Org Salary]} ON columns, Hierarchize(Union({[Employees].[All Employees]}, [Employees].[All Employees].Children)) ON rows FROM HR WHERE ([Time].[1997])' .
+    					    '</Statement>' .
+    					  '</Command>' .
+    					  '<Properties>' .
+    					    '<PropertyList>' .
+    					      '<Catalog>FoodMart</Catalog>' .
+    					      '<DataSourceInfo>Provider=Mondrian;DataSource=MondrianFoodMart;</DataSourceInfo>' .
+    					      '<Format>Multidimensional</Format>' .
+    					      '<AxisFormat>TupleFormat</AxisFormat>' .
+    					    '</PropertyList>' .
+    					  '</Properties>' .
+              		  '</Execute>' .
+              		 '</Body>' .
+              		'</Envelope>';
 		
         $this->compareXml($test, $result); 
     }
