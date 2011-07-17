@@ -27,7 +27,6 @@ class Level extends MetadataBase implements LevelInterface
 	protected $cubeName;
 	protected $dimensionUniqueName;
 	protected $hierarchyUniqueName;
-	protected $uniqueName;
 	protected $caption;
 	protected $number;
 	protected $cardinality;
@@ -66,16 +65,6 @@ class Level extends MetadataBase implements LevelInterface
      */
 	public function getHierarchyUniqueName(){
 		return $this->hierarchyUniqueName;
-	}
-
-    /**
-     * Get unique name
-     *
-     * @return String Unique name
-     *
-     */
-	public function getUniqueName(){
-		return $this->uniqueName;
 	}
 	
     /**

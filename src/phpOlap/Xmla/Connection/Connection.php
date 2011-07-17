@@ -129,7 +129,7 @@ class Connection  implements ConnectionInterface
 	public function findOneDatabase(Array $propertyList = null, Array $restrictionList = null)
 	{
 		$databases = $this->findDatabases($propertyList, $restrictionList);
-		return isset($databases[0]) ? $databases[0] : null;	
+		return count($databases) ? current($databases) : null;	
 	}
 
     /**
@@ -151,7 +151,7 @@ class Connection  implements ConnectionInterface
 	public function findOneCatalog(Array $propertyList = null, Array $restrictionList = null)
 	{
 		$catalogs = $this->findCatalogs($propertyList, $restrictionList);
-		return isset($catalogs[0]) ? $catalogs[0] : null;	
+		return count($catalogs) ? current($catalogs) : null;	
 	}
 	
     /**
@@ -178,7 +178,7 @@ class Connection  implements ConnectionInterface
 	public function findOneSchema(Array $propertyList = null, Array $restrictionList = null)
 	{
 		$schemas = $this->findSchemas($propertyList, $restrictionList);
-		return isset($schemas[0]) ? $schemas[0] : null;	
+		return count($schemas) ? current($schemas) : null;
 	}
 	
     /**
@@ -204,7 +204,7 @@ class Connection  implements ConnectionInterface
 	public function findOneCube(Array $propertyList = null, Array $restrictionList = null)
 	{
 		$cubes = $this->findCubes($propertyList, $restrictionList);
-		return isset($cubes[0]) ? $cubes[0] : null;	
+		return count($cubes) ? current($cubes) : null;
 	}
 
     /**
@@ -230,7 +230,7 @@ class Connection  implements ConnectionInterface
 	public function findOneDimension(Array $propertyList = null, Array $restrictionList = null)
 	{
 		$dimensions = $this->findDimensions($propertyList, $restrictionList);
-		return isset($dimensions[0]) ? $dimensions[0] : null;	
+		return count($dimensions) ? current($dimensions) : null;
 	}
 
     /**
@@ -256,7 +256,7 @@ class Connection  implements ConnectionInterface
 	public function findOneHierarchy(Array $propertyList = null, Array $restrictionList = null)
 	{
 		$hierarchies = $this->findHierarchies($propertyList, $restrictionList);
-		return isset($hierarchies[0]) ? $hierarchies[0] : null;	
+		return count($hierarchies) ? current($hierarchies) : null;
 	}
 
 
@@ -283,7 +283,7 @@ class Connection  implements ConnectionInterface
 	public function findOneLevel(Array $propertyList = null, Array $restrictionList = null)
 	{
 		$levels = $this->findLevels($propertyList, $restrictionList);
-		return isset($levels[0]) ? $levels[0] : null;	
+		return count($levels) ? current($levels) : null;
 	}
 
     /**
@@ -309,7 +309,7 @@ class Connection  implements ConnectionInterface
 	public function findOneMember(Array $propertyList = null, Array $restrictionList = null)
 	{
 		$members = $this->findLevels($propertyList, $restrictionList);
-		return isset($members[0]) ? $members[0] : null;	
+		return count($members) ? current($members) : null;
 	}
 
     /**
@@ -335,7 +335,7 @@ class Connection  implements ConnectionInterface
 	public function findOneMeasure(Array $propertyList = null, Array $restrictionList = null)
 	{
 		$measures = $this->findMeasures($propertyList, $restrictionList);
-		return isset($measures[0]) ? $measures[0] : null;	
+		return count($measures) ? current($measures) : null;
 	}
 	
     /**
@@ -369,7 +369,7 @@ class Connection  implements ConnectionInterface
 		foreach ($result as $node) {
 			$object = new $class;
 			$object->hydrate($node, $this);
-			$collection[] = $object;
+			$collection[$object->getUniqueName()] = $object;
 		}
 		return $collection;
 		

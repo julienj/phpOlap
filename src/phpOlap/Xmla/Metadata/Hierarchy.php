@@ -26,7 +26,6 @@ class Hierarchy extends MetadataBase implements HierarchyInterface
 {
 	protected $cubeName;
 	protected $dimensionUniqueName;
-	protected $uniqueName;
 	protected $caption;
 	protected $cardinality;
 	protected $defaultMemberUniqueName;
@@ -56,16 +55,6 @@ class Hierarchy extends MetadataBase implements HierarchyInterface
      */
 	public function getDimensionUniqueName(){
 		return $this->dimensionUniqueName;
-	}
-	
-    /**
-     * Get unique name
-     *
-     * @return String Unique name
-     *
-     */
-	public function getUniqueName(){
-		return $this->uniqueName;
 	}
 	
     /**
@@ -167,6 +156,16 @@ class Hierarchy extends MetadataBase implements HierarchyInterface
 				);
 		}
 		return $this->levels;
+	}
+
+    /**
+     * Add Level
+     *
+     * @param Level $level Level object
+     *
+     */
+	public function addLevel(Level $level){
+		$this->levels[$level->getUniqueName()] = $level;
 	}
 
     /**

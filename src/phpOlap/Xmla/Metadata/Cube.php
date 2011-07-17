@@ -39,6 +39,16 @@ class Cube extends MetadataBase implements CubeInterface
 	}
 
     /**
+     * Get unique name
+     *
+     * @return String Unique name
+     *
+     */
+	public function getUniqueName(){
+		return "[" . $this->name . "]";
+	}
+
+    /**
      * Get Dimentions
      *
      * @return Array Dimensions collection
@@ -51,6 +61,42 @@ class Cube extends MetadataBase implements CubeInterface
 					array('CUBE_NAME' => $this->getName())
 				);
 		}
+		return $this->dimensions;
+	}
+
+    /**
+     * Get Dimentions, Hierarchies and levels with 3 requests
+     *
+     * @return Array Dimensions collection
+     *
+     */
+	public function getDimensionsAndHierarchiesAndLevels(){
+
+		$dimensions = $this->getDimensions();
+		
+		// add hierarchies
+		$hierarchies = $this->getConnection()->findHierarchies(
+				array(),
+				array('CUBE_NAME' => $this->getName())
+		);				
+		foreach ($hierarchies as $hierarchyUniqueName => $hierarchy) {
+            if (array_key_exists($hierarchy->getDimensionUniqueName(), $dimensions)) {
+                $dimensions[$hierarchy->getDimensionUniqueName()]->addHierachy($hierarchy);
+            }
+		}
+		
+		// add levels
+		$levels = $this->getConnection()->findLevels(
+				array(),
+				array('CUBE_NAME' => $this->getName())
+		);		
+    	foreach ($levels as $levelUniqueName => $level) {
+            if (array_key_exists($level->getDimensionUniqueName(), $dimensions)) {
+                $dimensions[$level->getDimensionUniqueName()]->addLevel($level);
+            }
+    	}		
+		
+		$this->dimensions = $dimensions;		
 		return $this->dimensions;
 	}
 

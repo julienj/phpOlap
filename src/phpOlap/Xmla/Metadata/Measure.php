@@ -24,7 +24,6 @@ use phpOlap\Metadata\MeasureInterface;
 */
 class Measure extends MetadataBase implements MeasureInterface
 {
-	protected $uniqueName;
 	protected $caption;
 	protected $aggregator;
 	protected $dataType;
@@ -41,16 +40,6 @@ class Measure extends MetadataBase implements MeasureInterface
 				7 => 'STD',
 				127 => 'CALCULATED'
 		);
-
-    /**
-     * Get unique name
-     *
-     * @return String Unique name
-     *
-     */
-	public function getUniqueName(){
-		return $this->uniqueName;
-	}
 	
     /**
      * Get caption

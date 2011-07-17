@@ -339,7 +339,7 @@ class SoapAdaptatorTest extends \PHPUnit_Framework_TestCase
       	$stub = $this->getMock(
 				'phpOlap\Xmla\Connection\Adaptator\SoapAdaptator',
 				array('__doRequest'),
-				array('http://localhost:8080/mondrian/xmla.jsp')
+				array('http://localhost:8080/mondrian/xmla.jsp', 'login' ,'pass')
 				); 
         $stub->expects($this->any()) 
              ->method('__doRequest') 

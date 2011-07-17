@@ -128,9 +128,9 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
 		
 		$cubes = $connection->findCubes();
 
-		$cube = $cubes[0];		
+		$cube = current($cubes);		
 		$this->assertEquals('Sales Ragged', $cube->getName());
-		$cube = $cubes[1];		
+		$cube = $cubes['[Store]'];		
 		$this->assertEquals('Store', $cube->getName());
 
 	}
@@ -164,7 +164,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
 		
 		$dims = $connection->findDimensions();
 
-		$dim = $dims[0];		
+		$dim = current($dims);		
 		$this->assertEquals('Education Level', $dim->getName());
 
 	}
@@ -224,7 +224,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
 		
 		$dims = $connection->findHierarchies();
 
-		$dim = $dims[0];		
+		$dim = current($dims);		
 		$this->assertEquals('Time', $dim->getName());
 		$this->assertEquals(4, $dim->getOrdinal());
 	}
@@ -258,7 +258,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
 		
 		$level = $connection->findLevels();
 
-		$level = $level[0];		
+		$level = current($level);		
 		$this->assertEquals('(All)', $level->getName());
 		$this->assertEquals('[Time.Weekly].[(All)]', $level->getUniqueName());
 	}
@@ -287,7 +287,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
 		
 		$measures = $connection->findMeasures();
 
-		$measure = $measures[0];		
+		$measure = current($measures);		
 		$this->assertEquals('Profit Growth', $measure->getName());
 	}
 
@@ -313,7 +313,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
 		
 		$measures = $connection->findMembers();
 
-		$measure = $measures[0];		
+		$measure = current($measures);		
 		$this->assertEquals('Store Cost', $measure->getName());
 	}
 

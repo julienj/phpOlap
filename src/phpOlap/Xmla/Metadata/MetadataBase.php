@@ -28,6 +28,7 @@ abstract class MetadataBase
 {
 	
 	protected $connection;
+	protected $uniqueName;
 	protected $name;
 	protected $description;
 	
@@ -49,6 +50,16 @@ abstract class MetadataBase
      */
 	public function getName(){
 		return $this->name;
+	}
+
+    /**
+     * Get unique name
+     *
+     * @return String Unique name
+     *
+     */
+	public function getUniqueName(){
+		return $this->uniqueName;
 	}
 
     /**

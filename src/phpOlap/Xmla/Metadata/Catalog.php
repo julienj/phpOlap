@@ -57,6 +57,17 @@ class Catalog extends MetadataBase implements CatalogInterface
 	}
 
     /**
+     * Get unique name
+     *
+     * @return String Unique name
+     *
+     */
+	public function getUniqueName(){
+		return "[" . $this->name . "]";
+	}
+
+
+    /**
      * Hydrate Element
      *
      * @param DOMNode $node Node

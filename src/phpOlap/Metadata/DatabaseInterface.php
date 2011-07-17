@@ -39,6 +39,14 @@ interface DatabaseInterface
 	public function getName();
 
     /**
+     * Get unique name
+     *
+     * @return String Unique name
+     *
+     */
+	public function getUniqueName();
+
+    /**
      * Get description
      *
      * @return String description

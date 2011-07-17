@@ -13,6 +13,8 @@ namespace phpOlap\Xmla\Metadata;
 
 use phpOlap\Xmla\Connection\ConnectionInterface;
 use phpOlap\Xmla\Metadata\MetadataBase;
+use phpOlap\Xmla\Metadata\Hierarchy;
+use phpOlap\Xmla\Metadata\Level;
 use phpOlap\Metadata\DimensionInterface;
 
 /**
@@ -25,7 +27,6 @@ use phpOlap\Metadata\DimensionInterface;
 class Dimension extends MetadataBase implements DimensionInterface
 {
 	protected $cubeName;
-	protected $uniqueName;
 	protected $caption;
 	protected $ordinal;
 	protected $type;
@@ -35,7 +36,7 @@ class Dimension extends MetadataBase implements DimensionInterface
 	protected $isReadWrite;
 	protected $uniqueSettings;
 	protected $isVisible;
-	protected $hierarchies;
+	protected $hierarchies = array();
 
 	protected $typeMap = array(
         0 => 'UNKNOWN',
@@ -66,16 +67,6 @@ class Dimension extends MetadataBase implements DimensionInterface
      */
 	public function getCubeName(){
 		return $this->cubeName;
-	}
-
-    /**
-     * Get unique name
-     *
-     * @return String Unique name
-     *
-     */
-	public function getUniqueName(){
-		return $this->uniqueName;
 	}
 	
     /**
@@ -188,6 +179,28 @@ class Dimension extends MetadataBase implements DimensionInterface
 				);
 		}
 		return $this->hierarchies;
+	}
+	
+    /**
+     * Add Hierarchy
+     *
+     * @param Hierarchy $hierarchy Hierarchy object
+     *
+     */
+	public function addHierachy(Hierarchy $hierarchy){
+		$this->hierarchies[$hierarchy->getUniqueName()] = $hierarchy;
+	}
+
+    /**
+     * Add Level
+     *
+     * @param Level $level Level object
+     *
+     */	
+	public function addLevel(Level $level){
+	    if (array_key_exists($level->getHierarchyUniqueName(), $this->hierarchies)) {
+	       $this->hierarchies[$level->getHierarchyUniqueName()]->addLevel($level);
+	    }
 	}
 	
     /**

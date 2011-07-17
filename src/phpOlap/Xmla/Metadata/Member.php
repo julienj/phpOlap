@@ -24,7 +24,6 @@ use phpOlap\Metadata\MemberInterface;
 */
 class Member extends MetadataBase implements MemberInterface
 {
-	protected $uniqueName;
 	protected $description = null;
 	protected $ordinal;
 	protected $type;
@@ -42,16 +41,6 @@ class Member extends MetadataBase implements MemberInterface
         4 => 'FORMULA',
         5 => 'NULL'
 		);
-
-    /**
-     * Get unique name
-     *
-     * @return String Unique name
-     *
-     */
-	public function getUniqueName(){
-		return $this->uniqueName;
-	}
 
     /**
      * Get ordinal
