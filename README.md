@@ -11,7 +11,7 @@ phpOlap is only supported on PHP 5.3.2 and up.
 
 API : http://phpolap.org/
 
-Schema exploration
+Database exploration
 ----------------
 
 ``` php
@@ -20,7 +20,10 @@ require_once '../autoload.php';
 use phpOlap\Xmla\Connection\Connection;
 use phpOlap\Xmla\Connection\Adaptator\SoapAdaptator;
 
-$connection = new Connection(new SoapAdaptator('http://localhost:8080/mondrian/xmla.jsp'));
+// for Mondrian
+$connection = new Connection(new SoapAdaptator('http://localhost:8080/mondrian/xmla'));
+// for Microsoft SQL Server Analysis Services
+//$connection = new Connection(new SoapAdaptator('http://192.168.1.13/olap/msmdpump.dll', 'user', 'pass'));
 $database = $connection->getActivDatabase();
 $catalog = $connection->getActivCatalog();
 $schema = $connection->getActivSchema();
@@ -42,7 +45,7 @@ $cube = $cubes[0];
 			<?php endforeach ?>
 		</ul>
 	</li>		
-	<?php foreach ($cube->getDimensions() as $dimention): ?>
+	<?php foreach ($cube->getDimensionsAndHierarchiesAndLevels() as $dimention): ?>
 		<?php if($dimention->getType() != 'MEASURE') : ?>
 		<li>
 			<?php echo $dimention->getCaption() ?>

@@ -62,16 +62,12 @@ class SoapAdaptator extends SoapClient implements AdaptatorInterface
 	public function discover($requestType, Array $propertyList, Array $restrictionList = null)
 	{
 		$xml = new \DOMDocument('1.0', 'UTF-8');
-		
-		$envelope = $xml->createElement("Envelope");
-		$envelope->setAttribute("xmlns", "http://schemas.xmlsoap.org/soap/envelope/");
-		
-		$body = $xml->createElement("Body");
-		$envelope->appendChild($body);	
+		$xml->loadXml($this->getBaseSoap());	
+		$body = $xml->getElementsByTagName( 'Body' )->item(0);
 		
 		$discover = $xml->createElement("Discover");
 		$discover->setAttribute("xmlns", "urn:schemas-microsoft-com:xml-analysis");
-		
+
 		$body->appendChild($discover);
 		
 		$requestTypeNode = $this->createNode($xml, "RequestType", $requestType);
@@ -86,9 +82,7 @@ class SoapAdaptator extends SoapClient implements AdaptatorInterface
 		$propertyListNode = $this->createNodeFromArray($xml, "PropertyList", $propertyList);
 		$propertiesNode->appendChild($propertyListNode);
 		$discover->appendChild($propertiesNode);
-		
-		$xml->appendChild($envelope);
-		
+				
 		return $this->call($xml, 'Discover');
 	
 	}
@@ -105,12 +99,8 @@ class SoapAdaptator extends SoapClient implements AdaptatorInterface
 	public function execute($statement, Array $propertyList)
 	{
 		$xml = new \DOMDocument('1.0', 'UTF-8');
-
-		$envelope = $xml->createElement("Envelope");
-		$envelope->setAttribute("xmlns", "http://schemas.xmlsoap.org/soap/envelope/");
-		
-		$body = $xml->createElement("Body");
-		$envelope->appendChild($body);
+		$xml->loadXml($this->getBaseSoap());	
+		$body = $xml->getElementsByTagName( 'Body' )->item(0);
 
 		$execute = $xml->createElement("Execute");
 		$execute->setAttribute("xmlns", "urn:schemas-microsoft-com:xml-analysis");
@@ -129,8 +119,6 @@ class SoapAdaptator extends SoapClient implements AdaptatorInterface
 			$execute->appendChild($propertiesNode);
 		}
 		
-		$xml->appendChild($envelope);
-		
 		return $this->call($xml, 'Execute');
 	}
 
@@ -145,7 +133,7 @@ class SoapAdaptator extends SoapClient implements AdaptatorInterface
      */
 	protected function call(\DOMDocument $request, $action)
 	{
-		$resultSoap = $this->__doRequest($request->saveXML(), $this->url,  $action, 1.1);	
+		$resultSoap = $this->__doRequest($request->saveXML(), $this->url,  $action, 1);	
 		if (!$resultSoap) {
 			throw new AdaptatorException('SOAP error : no response');
 		}
@@ -192,5 +180,12 @@ class SoapAdaptator extends SoapClient implements AdaptatorInterface
 		}
 		return $container;
 	}
+
+    function getBaseSoap() {
+
+        return '<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' .
+                    '<SOAP-ENV:Body />' .
+                '</SOAP-ENV:Envelope>';
+    }
 
 }

@@ -32,26 +32,26 @@ class SoapAdaptatorTest extends \PHPUnit_Framework_TestCase
 					'CUBE_NAME' => 'Sales'
 				)
 			);
-		$result = '<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/">' .
-                    '<Body>' .
-                      '<Discover xmlns="urn:schemas-microsoft-com:xml-analysis">' .
-                        '<RequestType>MDSCHEMA_DIMENSIONS</RequestType>' .
-                        '<Restrictions>' .
-                          '<RestrictionList>' .
-                            '<CATALOG_NAME>FoodMart</CATALOG_NAME>' .
-                            '<CUBE_NAME>Sales</CUBE_NAME>' .
-                          '</RestrictionList>' .
-                        '</Restrictions>' .
-                        '<Properties>' .
-                          '<PropertyList>' .
-                            '<DataSourceInfo>Provider=Mondrian;DataSource=MondrianFoodMart;</DataSourceInfo>' .
-                            '<Catalog>FoodMart</Catalog>' .
-                            '<Format>Tabular</Format>' .
-                          '</PropertyList>' .
-                        '</Properties>' .
-                      '</Discover>' .
-                    '</Body>' .
-                    '</Envelope>';
+		$result = '<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' .
+                    '<SOAP-ENV:Body>' .
+                        '<Discover xmlns="urn:schemas-microsoft-com:xml-analysis">' .
+                          '<RequestType>MDSCHEMA_DIMENSIONS</RequestType>' .
+                          '<Restrictions>' .
+                            '<RestrictionList>' .
+                              '<CATALOG_NAME>FoodMart</CATALOG_NAME>' .
+                              '<CUBE_NAME>Sales</CUBE_NAME>' .
+                            '</RestrictionList>' .
+                          '</Restrictions>' .
+                          '<Properties>' .
+                            '<PropertyList>' .
+                              '<DataSourceInfo>Provider=Mondrian;DataSource=MondrianFoodMart;</DataSourceInfo>' .
+                              '<Catalog>FoodMart</Catalog>' .
+                              '<Format>Tabular</Format>' .
+                            '</PropertyList>' .
+                          '</Properties>' .
+                        '</Discover>' .
+                      '</SOAP-ENV:Body>' .
+                    '</SOAP-ENV:Envelope>';
 		
         $this->compareXml($test, $result); 
     }
@@ -69,8 +69,8 @@ class SoapAdaptatorTest extends \PHPUnit_Framework_TestCase
 					'Format' =>'Tabular'
 				)
 			);
-		$result = '<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/">' .
-                    '<Body>' .
+		$result = '<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' .
+                    '<SOAP-ENV:Body>' .
                       '<Discover xmlns="urn:schemas-microsoft-com:xml-analysis">' .
     				    '<RequestType>MDSCHEMA_DIMENSIONS</RequestType>' .
     				    '<Restrictions>' .
@@ -85,8 +85,8 @@ class SoapAdaptatorTest extends \PHPUnit_Framework_TestCase
     				      '</PropertyList>' .
     				    '</Properties>' .
             		  '</Discover>' .
-            		 '</Body>' .
-            		'</Envelope>';
+            		 '</SOAP-ENV:Body>' .
+            		'</SOAP-ENV:Envelope>';
 		
         $this->compareXml($test, $result); 
     }
@@ -106,8 +106,8 @@ class SoapAdaptatorTest extends \PHPUnit_Framework_TestCase
 					'CUBE_NAME' => 'Sales'
 				)
 			);
-		$result = '<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/">' .
-                    '<Body>' .
+		$result = '<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' .
+                    '<SOAP-ENV:Body>' .
                       '<Discover xmlns="urn:schemas-microsoft-com:xml-analysis">' .
     				    '<RequestType>MDSCHEMA_DIMENSIONS</RequestType>' .
     				    '<Restrictions>' .
@@ -123,8 +123,8 @@ class SoapAdaptatorTest extends \PHPUnit_Framework_TestCase
     				      '</PropertyList>' .
     				    '</Properties>' .
             		  '</Discover>' .
-            		 '</Body>' .
-            		'</Envelope>';
+            		 '</SOAP-ENV:Body>' .
+            		'</SOAP-ENV:Envelope>';
 		
         $this->compareXml($test, $result); 
     }
@@ -143,8 +143,8 @@ class SoapAdaptatorTest extends \PHPUnit_Framework_TestCase
 					'AxisFormat' =>'TupleFormat'
 				)
 			);
-		$result = '<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/">' .
-                    '<Body>' .
+		$result = '<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' .
+                    '<SOAP-ENV:Body>' .
                       '<Execute xmlns="urn:schemas-microsoft-com:xml-analysis">' .
     					  '<Command>' .
     					    '<Statement>' .
@@ -160,8 +160,8 @@ class SoapAdaptatorTest extends \PHPUnit_Framework_TestCase
     					    '</PropertyList>' .
     					  '</Properties>' .
               		  '</Execute>' .
-              		 '</Body>' .
-              		'</Envelope>';
+              		 '</SOAP-ENV:Body>' .
+              		'</SOAP-ENV:Envelope>';
 		
         $this->compareXml($test, $result); 
     }
