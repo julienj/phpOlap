@@ -31,7 +31,7 @@ class CsvTableLayout extends TableLayoutAbstract
      */
 	protected function renderGlobalLayout()
 	{
-		return "%{{header}}%%{{body}}%";
+		return "{{header}}{{body}}";
 	}
 	
     /**

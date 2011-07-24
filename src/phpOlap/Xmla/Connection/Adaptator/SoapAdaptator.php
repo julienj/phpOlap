@@ -181,7 +181,7 @@ class SoapAdaptator extends SoapClient implements AdaptatorInterface
 		return $container;
 	}
 
-    function getBaseSoap() {
+    protected function getBaseSoap() {
 
         return '<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' .
                     '<SOAP-ENV:Body />' .

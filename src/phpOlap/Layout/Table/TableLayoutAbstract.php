@@ -80,14 +80,17 @@ abstract class TableLayoutAbstract implements LayoutInterface
 			
 			//	Row Hierarchy Title	
 			foreach ($this->resultSet->getRowHierarchiesName() as $col => $rowHierarchyName) {
+			    
+			    $topLeft = ($row == 0 && $col == 0);
+			    
 				if ($row +1 == count($this->resultSet->getColHierarchiesName()) ) {				
 					$rowContent .= $this->renderHeaderCellRowHierarchyTitle($rowHierarchyName, $rowNb);
 					$rowHeaderContent .= $this->renderHeaderCellEmpty(
 													$rowNb - 1,
-													count($this->resultSet->getColHierarchiesName()),
-													false);
+													count($this->resultSet->getRowHierarchiesName()),
+													$topLeft);
 				} else { // empty cells
-					$topLeft = ($row == 0 && $col == 0);
+					
 					$rowContent .= $this->renderHeaderCellEmpty(
 													$rowNb - 1,
 													count($this->resultSet->getColHierarchiesName()),
