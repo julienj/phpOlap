@@ -1,0 +1,2275 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" >
+<SOAP-ENV:Header>
+</SOAP-ENV:Header>
+<SOAP-ENV:Body>
+<cxmla:ExecuteResponse xmlns:cxmla="urn:schemas-microsoft-com:xml-analysis">
+  <cxmla:return>
+    <root xmlns="urn:schemas-microsoft-com:xml-analysis:mddataset" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:EX="urn:schemas-microsoft-com:xml-analysis:exception">
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:schemas-microsoft-com:xml-analysis:mddataset" xmlns="urn:schemas-microsoft-com:xml-analysis:mddataset" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sql="urn:schemas-microsoft-com:xml-sql" elementFormDefault="qualified">
+        <xsd:complexType name="MemberType">
+          <xsd:sequence>
+            <xsd:element name="UName" type="xsd:string"/>
+
+            <xsd:element name="Caption" type="xsd:string"/>
+            <xsd:element name="LName" type="xsd:string"/>
+            <xsd:element name="LNum" type="xsd:unsignedInt"/>
+            <xsd:element name="DisplayInfo" type="xsd:unsignedInt"/>
+            <xsd:sequence maxOccurs="unbounded" minOccurs="0">
+              <xsd:any processContents="lax" maxOccurs="unbounded"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="Hierarchy" type="xsd:string"/>
+
+        </xsd:complexType>
+        <xsd:complexType name="PropType">
+          <xsd:attribute name="name" type="xsd:string"/>
+        </xsd:complexType>
+        <xsd:complexType name="TupleType">
+          <xsd:sequence maxOccurs="unbounded">
+            <xsd:element name="Member" type="MemberType"/>
+          </xsd:sequence>
+        </xsd:complexType>
+
+        <xsd:complexType name="MembersType">
+          <xsd:sequence maxOccurs="unbounded">
+            <xsd:element name="Member" type="MemberType"/>
+          </xsd:sequence>
+          <xsd:attribute name="Hierarchy" type="xsd:string"/>
+        </xsd:complexType>
+        <xsd:complexType name="TuplesType">
+          <xsd:sequence maxOccurs="unbounded">
+            <xsd:element name="Tuple" type="TupleType"/>
+
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="CrossProductType">
+          <xsd:sequence>
+            <xsd:choice minOccurs="0" maxOccurs="unbounded">
+              <xsd:element name="Members" type="MembersType"/>
+              <xsd:element name="Tuples" type="TuplesType"/>
+            </xsd:choice>
+          </xsd:sequence>
+
+          <xsd:attribute name="Size" type="xsd:unsignedInt"/>
+        </xsd:complexType>
+        <xsd:complexType name="OlapInfo">
+          <xsd:sequence>
+            <xsd:element name="CubeInfo">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element name="Cube" maxOccurs="unbounded">
+                    <xsd:complexType>
+
+                      <xsd:sequence>
+                        <xsd:element name="CubeName" type="xsd:string"/>
+                      </xsd:sequence>
+                    </xsd:complexType>
+                  </xsd:element>
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="AxesInfo">
+
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element name="AxisInfo" maxOccurs="unbounded">
+                    <xsd:complexType>
+                      <xsd:sequence>
+                        <xsd:element name="HierarchyInfo" minOccurs="0" maxOccurs="unbounded">
+                          <xsd:complexType>
+                            <xsd:sequence>
+                              <xsd:sequence maxOccurs="unbounded">
+
+                                <xsd:element name="UName" type="PropType"/>
+                                <xsd:element name="Caption" type="PropType"/>
+                                <xsd:element name="LName" type="PropType"/>
+                                <xsd:element name="LNum" type="PropType"/>
+                                <xsd:element name="DisplayInfo" type="PropType" minOccurs="0" maxOccurs="unbounded"/>
+                              </xsd:sequence>
+                              <xsd:sequence>
+                                <xsd:any processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+                              </xsd:sequence>
+
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" use="required"/>
+                          </xsd:complexType>
+                        </xsd:element>
+                      </xsd:sequence>
+                      <xsd:attribute name="name" type="xsd:string"/>
+                    </xsd:complexType>
+                  </xsd:element>
+                </xsd:sequence>
+
+              </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="CellInfo">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:sequence minOccurs="0" maxOccurs="unbounded">
+                    <xsd:choice>
+                      <xsd:element name="Value" type="PropType"/>
+                      <xsd:element name="FmtValue" type="PropType"/>
+
+                      <xsd:element name="BackColor" type="PropType"/>
+                      <xsd:element name="ForeColor" type="PropType"/>
+                      <xsd:element name="FontName" type="PropType"/>
+                      <xsd:element name="FontSize" type="PropType"/>
+                      <xsd:element name="FontFlags" type="PropType"/>
+                      <xsd:element name="FormatString" type="PropType"/>
+                      <xsd:element name="NonEmptyBehavior" type="PropType"/>
+                      <xsd:element name="SolveOrder" type="PropType"/>
+                      <xsd:element name="Updateable" type="PropType"/>
+
+                      <xsd:element name="Visible" type="PropType"/>
+                      <xsd:element name="Expression" type="PropType"/>
+                    </xsd:choice>
+                  </xsd:sequence>
+                  <xsd:sequence maxOccurs="unbounded" minOccurs="0">
+                    <xsd:any processContents="lax" maxOccurs="unbounded"/>
+                  </xsd:sequence>
+                </xsd:sequence>
+              </xsd:complexType>
+
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="Axes">
+          <xsd:sequence maxOccurs="unbounded">
+            <xsd:element name="Axis">
+              <xsd:complexType>
+                <xsd:choice minOccurs="0" maxOccurs="unbounded">
+                  <xsd:element name="CrossProduct" type="CrossProductType"/>
+
+                  <xsd:element name="Tuples" type="TuplesType"/>
+                  <xsd:element name="Members" type="MembersType"/>
+                </xsd:choice>
+                <xsd:attribute name="name" type="xsd:string"/>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="CellData">
+
+          <xsd:sequence>
+            <xsd:element name="Cell" minOccurs="0" maxOccurs="unbounded">
+              <xsd:complexType>
+                <xsd:sequence maxOccurs="unbounded">
+                  <xsd:choice>
+                    <xsd:element name="Value"/>
+                    <xsd:element name="FmtValue" type="xsd:string"/>
+                    <xsd:element name="BackColor" type="xsd:unsignedInt"/>
+                    <xsd:element name="ForeColor" type="xsd:unsignedInt"/>
+
+                    <xsd:element name="FontName" type="xsd:string"/>
+                    <xsd:element name="FontSize" type="xsd:unsignedShort"/>
+                    <xsd:element name="FontFlags" type="xsd:unsignedInt"/>
+                    <xsd:element name="FormatString" type="xsd:string"/>
+                    <xsd:element name="NonEmptyBehavior" type="xsd:unsignedShort"/>
+                    <xsd:element name="SolveOrder" type="xsd:unsignedInt"/>
+                    <xsd:element name="Updateable" type="xsd:unsignedInt"/>
+                    <xsd:element name="Visible" type="xsd:unsignedInt"/>
+                    <xsd:element name="Expression" type="xsd:string"/>
+
+                  </xsd:choice>
+                </xsd:sequence>
+                <xsd:attribute name="CellOrdinal" type="xsd:unsignedInt" use="required"/>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:element name="root">
+          <xsd:complexType>
+
+            <xsd:sequence maxOccurs="unbounded">
+              <xsd:element name="OlapInfo" type="OlapInfo"/>
+              <xsd:element name="Axes" type="Axes"/>
+              <xsd:element name="CellData" type="CellData"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:schema>
+      <OlapInfo>
+
+        <CubeInfo>
+          <Cube>
+            <CubeName>Sales</CubeName>
+          </Cube>
+        </CubeInfo>
+        <AxesInfo>
+          <AxisInfo name="Axis0">
+            <HierarchyInfo name="Measures">
+
+              <UName name="[Measures].[MEMBER_UNIQUE_NAME]"/>
+              <Caption name="[Measures].[MEMBER_CAPTION]"/>
+              <LName name="[Measures].[LEVEL_UNIQUE_NAME]"/>
+              <LNum name="[Measures].[LEVEL_NUMBER]"/>
+              <DisplayInfo name="[Measures].[DISPLAY_INFO]"/>
+            </HierarchyInfo>
+            <HierarchyInfo name="Gender">
+              <UName name="[Gender].[MEMBER_UNIQUE_NAME]"/>
+              <Caption name="[Gender].[MEMBER_CAPTION]"/>
+
+              <LName name="[Gender].[LEVEL_UNIQUE_NAME]"/>
+              <LNum name="[Gender].[LEVEL_NUMBER]"/>
+              <DisplayInfo name="[Gender].[DISPLAY_INFO]"/>
+            </HierarchyInfo>
+            <HierarchyInfo name="Store">
+              <UName name="[Store].[MEMBER_UNIQUE_NAME]"/>
+              <Caption name="[Store].[MEMBER_CAPTION]"/>
+              <LName name="[Store].[LEVEL_UNIQUE_NAME]"/>
+              <LNum name="[Store].[LEVEL_NUMBER]"/>
+
+              <DisplayInfo name="[Store].[DISPLAY_INFO]"/>
+            </HierarchyInfo>
+          </AxisInfo>
+          <AxisInfo name="Axis1">
+            <HierarchyInfo name="Education Level">
+              <UName name="[Education Level].[MEMBER_UNIQUE_NAME]"/>
+              <Caption name="[Education Level].[MEMBER_CAPTION]"/>
+              <LName name="[Education Level].[LEVEL_UNIQUE_NAME]"/>
+              <LNum name="[Education Level].[LEVEL_NUMBER]"/>
+
+              <DisplayInfo name="[Education Level].[DISPLAY_INFO]"/>
+            </HierarchyInfo>
+            <HierarchyInfo name="Customers">
+              <UName name="[Customers].[MEMBER_UNIQUE_NAME]"/>
+              <Caption name="[Customers].[MEMBER_CAPTION]"/>
+              <LName name="[Customers].[LEVEL_UNIQUE_NAME]"/>
+              <LNum name="[Customers].[LEVEL_NUMBER]"/>
+              <DisplayInfo name="[Customers].[DISPLAY_INFO]"/>
+            </HierarchyInfo>
+
+            <HierarchyInfo name="Product">
+              <UName name="[Product].[MEMBER_UNIQUE_NAME]"/>
+              <Caption name="[Product].[MEMBER_CAPTION]"/>
+              <LName name="[Product].[LEVEL_UNIQUE_NAME]"/>
+              <LNum name="[Product].[LEVEL_NUMBER]"/>
+              <DisplayInfo name="[Product].[DISPLAY_INFO]"/>
+            </HierarchyInfo>
+          </AxisInfo>
+          <AxisInfo name="SlicerAxis">
+
+            <HierarchyInfo name="Time">
+              <UName name="[Time].[MEMBER_UNIQUE_NAME]"/>
+              <Caption name="[Time].[MEMBER_CAPTION]"/>
+              <LName name="[Time].[LEVEL_UNIQUE_NAME]"/>
+              <LNum name="[Time].[LEVEL_NUMBER]"/>
+              <DisplayInfo name="[Time].[DISPLAY_INFO]"/>
+            </HierarchyInfo>
+          </AxisInfo>
+        </AxesInfo>
+
+        <CellInfo>
+          <Value name="VALUE"/>
+          <FmtValue name="FORMATTED_VALUE"/>
+          <FormatString name="FORMAT_STRING"/>
+        </CellInfo>
+      </OlapInfo>
+      <Axes>
+        <Axis name="Axis0">
+          <Tuples>
+
+            <Tuple>
+              <Member Hierarchy="Measures">
+                <UName>[Measures].[Unit Sales]</UName>
+                <Caption>Unit Sales</Caption>
+                <LName>[Measures].[MeasuresLevel]</LName>
+                <LNum>0</LNum>
+                <DisplayInfo>0</DisplayInfo>
+
+              </Member>
+              <Member Hierarchy="Gender">
+                <UName>[Gender].[All Gender]</UName>
+                <Caption>All Gender</Caption>
+                <LName>[Gender].[(All)]</LName>
+                <LNum>0</LNum>
+                <DisplayInfo>2</DisplayInfo>
+
+              </Member>
+              <Member Hierarchy="Store">
+                <UName>[Store].[All Stores]</UName>
+                <Caption>All Stores</Caption>
+                <LName>[Store].[(All)]</LName>
+                <LNum>0</LNum>
+                <DisplayInfo>3</DisplayInfo>
+
+              </Member>
+            </Tuple>
+            <Tuple>
+              <Member Hierarchy="Measures">
+                <UName>[Measures].[Store Cost]</UName>
+                <Caption>Store Cost</Caption>
+                <LName>[Measures].[MeasuresLevel]</LName>
+
+                <LNum>0</LNum>
+                <DisplayInfo>0</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Gender">
+                <UName>[Gender].[All Gender]</UName>
+                <Caption>All Gender</Caption>
+                <LName>[Gender].[(All)]</LName>
+
+                <LNum>0</LNum>
+                <DisplayInfo>65538</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Store">
+                <UName>[Store].[All Stores]</UName>
+                <Caption>All Stores</Caption>
+                <LName>[Store].[(All)]</LName>
+
+                <LNum>0</LNum>
+                <DisplayInfo>3</DisplayInfo>
+              </Member>
+            </Tuple>
+            <Tuple>
+              <Member Hierarchy="Measures">
+                <UName>[Measures].[Store Cost]</UName>
+
+                <Caption>Store Cost</Caption>
+                <LName>[Measures].[MeasuresLevel]</LName>
+                <LNum>0</LNum>
+                <DisplayInfo>0</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Gender">
+                <UName>[Gender].[F]</UName>
+
+                <Caption>F</Caption>
+                <LName>[Gender].[Gender]</LName>
+                <LNum>1</LNum>
+                <DisplayInfo>0</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Store">
+                <UName>[Store].[All Stores]</UName>
+
+                <Caption>All Stores</Caption>
+                <LName>[Store].[(All)]</LName>
+                <LNum>0</LNum>
+                <DisplayInfo>65539</DisplayInfo>
+              </Member>
+            </Tuple>
+            <Tuple>
+
+              <Member Hierarchy="Measures">
+                <UName>[Measures].[Store Cost]</UName>
+                <Caption>Store Cost</Caption>
+                <LName>[Measures].[MeasuresLevel]</LName>
+                <LNum>0</LNum>
+                <DisplayInfo>0</DisplayInfo>
+
+              </Member>
+              <Member Hierarchy="Gender">
+                <UName>[Gender].[F]</UName>
+                <Caption>F</Caption>
+                <LName>[Gender].[Gender]</LName>
+                <LNum>1</LNum>
+                <DisplayInfo>131072</DisplayInfo>
+
+              </Member>
+              <Member Hierarchy="Store">
+                <UName>[Store].[Canada]</UName>
+                <Caption>Canada</Caption>
+                <LName>[Store].[Store Country]</LName>
+                <LNum>1</LNum>
+                <DisplayInfo>1</DisplayInfo>
+
+              </Member>
+            </Tuple>
+            <Tuple>
+              <Member Hierarchy="Measures">
+                <UName>[Measures].[Store Cost]</UName>
+                <Caption>Store Cost</Caption>
+                <LName>[Measures].[MeasuresLevel]</LName>
+
+                <LNum>0</LNum>
+                <DisplayInfo>0</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Gender">
+                <UName>[Gender].[F]</UName>
+                <Caption>F</Caption>
+                <LName>[Gender].[Gender]</LName>
+
+                <LNum>1</LNum>
+                <DisplayInfo>131072</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Store">
+                <UName>[Store].[Mexico]</UName>
+                <Caption>Mexico</Caption>
+                <LName>[Store].[Store Country]</LName>
+
+                <LNum>1</LNum>
+                <DisplayInfo>131078</DisplayInfo>
+              </Member>
+            </Tuple>
+            <Tuple>
+              <Member Hierarchy="Measures">
+                <UName>[Measures].[Store Cost]</UName>
+
+                <Caption>Store Cost</Caption>
+                <LName>[Measures].[MeasuresLevel]</LName>
+                <LNum>0</LNum>
+                <DisplayInfo>0</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Gender">
+                <UName>[Gender].[F]</UName>
+
+                <Caption>F</Caption>
+                <LName>[Gender].[Gender]</LName>
+                <LNum>1</LNum>
+                <DisplayInfo>131072</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Store">
+                <UName>[Store].[USA]</UName>
+
+                <Caption>USA</Caption>
+                <LName>[Store].[Store Country]</LName>
+                <LNum>1</LNum>
+                <DisplayInfo>131075</DisplayInfo>
+              </Member>
+            </Tuple>
+            <Tuple>
+
+              <Member Hierarchy="Measures">
+                <UName>[Measures].[Store Cost]</UName>
+                <Caption>Store Cost</Caption>
+                <LName>[Measures].[MeasuresLevel]</LName>
+                <LNum>0</LNum>
+                <DisplayInfo>0</DisplayInfo>
+
+              </Member>
+              <Member Hierarchy="Gender">
+                <UName>[Gender].[M]</UName>
+                <Caption>M</Caption>
+                <LName>[Gender].[Gender]</LName>
+                <LNum>1</LNum>
+                <DisplayInfo>131072</DisplayInfo>
+
+              </Member>
+              <Member Hierarchy="Store">
+                <UName>[Store].[All Stores]</UName>
+                <Caption>All Stores</Caption>
+                <LName>[Store].[(All)]</LName>
+                <LNum>0</LNum>
+                <DisplayInfo>3</DisplayInfo>
+
+              </Member>
+            </Tuple>
+            <Tuple>
+              <Member Hierarchy="Measures">
+                <UName>[Measures].[Store Sales]</UName>
+                <Caption>Store Sales</Caption>
+                <LName>[Measures].[MeasuresLevel]</LName>
+
+                <LNum>0</LNum>
+                <DisplayInfo>0</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Gender">
+                <UName>[Gender].[All Gender]</UName>
+                <Caption>All Gender</Caption>
+                <LName>[Gender].[(All)]</LName>
+
+                <LNum>0</LNum>
+                <DisplayInfo>65538</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Store">
+                <UName>[Store].[All Stores]</UName>
+                <Caption>All Stores</Caption>
+                <LName>[Store].[(All)]</LName>
+
+                <LNum>0</LNum>
+                <DisplayInfo>3</DisplayInfo>
+              </Member>
+            </Tuple>
+            <Tuple>
+              <Member Hierarchy="Measures">
+                <UName>[Measures].[Store Sales]</UName>
+
+                <Caption>Store Sales</Caption>
+                <LName>[Measures].[MeasuresLevel]</LName>
+                <LNum>0</LNum>
+                <DisplayInfo>0</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Gender">
+                <UName>[Gender].[F]</UName>
+
+                <Caption>F</Caption>
+                <LName>[Gender].[Gender]</LName>
+                <LNum>1</LNum>
+                <DisplayInfo>0</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Store">
+                <UName>[Store].[All Stores]</UName>
+
+                <Caption>All Stores</Caption>
+                <LName>[Store].[(All)]</LName>
+                <LNum>0</LNum>
+                <DisplayInfo>3</DisplayInfo>
+              </Member>
+            </Tuple>
+            <Tuple>
+
+              <Member Hierarchy="Measures">
+                <UName>[Measures].[Store Sales]</UName>
+                <Caption>Store Sales</Caption>
+                <LName>[Measures].[MeasuresLevel]</LName>
+                <LNum>0</LNum>
+                <DisplayInfo>0</DisplayInfo>
+
+              </Member>
+              <Member Hierarchy="Gender">
+                <UName>[Gender].[M]</UName>
+                <Caption>M</Caption>
+                <LName>[Gender].[Gender]</LName>
+                <LNum>1</LNum>
+                <DisplayInfo>131072</DisplayInfo>
+
+              </Member>
+              <Member Hierarchy="Store">
+                <UName>[Store].[All Stores]</UName>
+                <Caption>All Stores</Caption>
+                <LName>[Store].[(All)]</LName>
+                <LNum>0</LNum>
+                <DisplayInfo>3</DisplayInfo>
+
+              </Member>
+            </Tuple>
+          </Tuples>
+        </Axis>
+        <Axis name="Axis1">
+          <Tuples>
+            <Tuple>
+              <Member Hierarchy="Education Level">
+                <UName>[Education Level].[All Education Levels]</UName>
+
+                <Caption>All Education Levels</Caption>
+                <LName>[Education Level].[(All)]</LName>
+                <LNum>0</LNum>
+                <DisplayInfo>5</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Customers">
+                <UName>[Customers].[All Customers]</UName>
+
+                <Caption>All Customers</Caption>
+                <LName>[Customers].[(All)]</LName>
+                <LNum>0</LNum>
+                <DisplayInfo>65539</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Product">
+                <UName>[Product].[All Products]</UName>
+
+                <Caption>All Products</Caption>
+                <LName>[Product].[(All)]</LName>
+                <LNum>0</LNum>
+                <DisplayInfo>3</DisplayInfo>
+              </Member>
+            </Tuple>
+            <Tuple>
+
+              <Member Hierarchy="Education Level">
+                <UName>[Education Level].[All Education Levels]</UName>
+                <Caption>All Education Levels</Caption>
+                <LName>[Education Level].[(All)]</LName>
+                <LNum>0</LNum>
+                <DisplayInfo>5</DisplayInfo>
+
+              </Member>
+              <Member Hierarchy="Customers">
+                <UName>[Customers].[Canada]</UName>
+                <Caption>Canada</Caption>
+                <LName>[Customers].[Country]</LName>
+                <LNum>1</LNum>
+                <DisplayInfo>1</DisplayInfo>
+
+              </Member>
+              <Member Hierarchy="Product">
+                <UName>[Product].[All Products]</UName>
+                <Caption>All Products</Caption>
+                <LName>[Product].[(All)]</LName>
+                <LNum>0</LNum>
+                <DisplayInfo>3</DisplayInfo>
+
+              </Member>
+            </Tuple>
+            <Tuple>
+              <Member Hierarchy="Education Level">
+                <UName>[Education Level].[All Education Levels]</UName>
+                <Caption>All Education Levels</Caption>
+                <LName>[Education Level].[(All)]</LName>
+
+                <LNum>0</LNum>
+                <DisplayInfo>5</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Customers">
+                <UName>[Customers].[Mexico]</UName>
+                <Caption>Mexico</Caption>
+                <LName>[Customers].[Country]</LName>
+
+                <LNum>1</LNum>
+                <DisplayInfo>131081</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Product">
+                <UName>[Product].[All Products]</UName>
+                <Caption>All Products</Caption>
+                <LName>[Product].[(All)]</LName>
+
+                <LNum>0</LNum>
+                <DisplayInfo>3</DisplayInfo>
+              </Member>
+            </Tuple>
+            <Tuple>
+              <Member Hierarchy="Education Level">
+                <UName>[Education Level].[All Education Levels]</UName>
+
+                <Caption>All Education Levels</Caption>
+                <LName>[Education Level].[(All)]</LName>
+                <LNum>0</LNum>
+                <DisplayInfo>5</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Customers">
+                <UName>[Customers].[USA]</UName>
+
+                <Caption>USA</Caption>
+                <LName>[Customers].[Country]</LName>
+                <LNum>1</LNum>
+                <DisplayInfo>196611</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Product">
+                <UName>[Product].[All Products]</UName>
+
+                <Caption>All Products</Caption>
+                <LName>[Product].[(All)]</LName>
+                <LNum>0</LNum>
+                <DisplayInfo>3</DisplayInfo>
+              </Member>
+            </Tuple>
+            <Tuple>
+
+              <Member Hierarchy="Education Level">
+                <UName>[Education Level].[All Education Levels]</UName>
+                <Caption>All Education Levels</Caption>
+                <LName>[Education Level].[(All)]</LName>
+                <LNum>0</LNum>
+                <DisplayInfo>5</DisplayInfo>
+
+              </Member>
+              <Member Hierarchy="Customers">
+                <UName>[Customers].[USA].[CA]</UName>
+                <Caption>CA</Caption>
+                <LName>[Customers].[State Province]</LName>
+                <LNum>2</LNum>
+                <DisplayInfo>45</DisplayInfo>
+
+              </Member>
+              <Member Hierarchy="Product">
+                <UName>[Product].[All Products]</UName>
+                <Caption>All Products</Caption>
+                <LName>[Product].[(All)]</LName>
+                <LNum>0</LNum>
+                <DisplayInfo>65539</DisplayInfo>
+
+              </Member>
+            </Tuple>
+            <Tuple>
+              <Member Hierarchy="Education Level">
+                <UName>[Education Level].[All Education Levels]</UName>
+                <Caption>All Education Levels</Caption>
+                <LName>[Education Level].[(All)]</LName>
+
+                <LNum>0</LNum>
+                <DisplayInfo>5</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Customers">
+                <UName>[Customers].[USA].[CA]</UName>
+                <Caption>CA</Caption>
+                <LName>[Customers].[State Province]</LName>
+
+                <LNum>2</LNum>
+                <DisplayInfo>131117</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Product">
+                <UName>[Product].[Drink]</UName>
+                <Caption>Drink</Caption>
+                <LName>[Product].[Product Family]</LName>
+
+                <LNum>1</LNum>
+                <DisplayInfo>3</DisplayInfo>
+              </Member>
+            </Tuple>
+            <Tuple>
+              <Member Hierarchy="Education Level">
+                <UName>[Education Level].[All Education Levels]</UName>
+
+                <Caption>All Education Levels</Caption>
+                <LName>[Education Level].[(All)]</LName>
+                <LNum>0</LNum>
+                <DisplayInfo>5</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Customers">
+                <UName>[Customers].[USA].[CA]</UName>
+
+                <Caption>CA</Caption>
+                <LName>[Customers].[State Province]</LName>
+                <LNum>2</LNum>
+                <DisplayInfo>131117</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Product">
+                <UName>[Product].[Food]</UName>
+
+                <Caption>Food</Caption>
+                <LName>[Product].[Product Family]</LName>
+                <LNum>1</LNum>
+                <DisplayInfo>196623</DisplayInfo>
+              </Member>
+            </Tuple>
+            <Tuple>
+
+              <Member Hierarchy="Education Level">
+                <UName>[Education Level].[All Education Levels]</UName>
+                <Caption>All Education Levels</Caption>
+                <LName>[Education Level].[(All)]</LName>
+                <LNum>0</LNum>
+                <DisplayInfo>5</DisplayInfo>
+
+              </Member>
+              <Member Hierarchy="Customers">
+                <UName>[Customers].[USA].[CA]</UName>
+                <Caption>CA</Caption>
+                <LName>[Customers].[State Province]</LName>
+                <LNum>2</LNum>
+                <DisplayInfo>131117</DisplayInfo>
+
+              </Member>
+              <Member Hierarchy="Product">
+                <UName>[Product].[Food].[Baked Goods]</UName>
+                <Caption>Baked Goods</Caption>
+                <LName>[Product].[Product Department]</LName>
+                <LNum>2</LNum>
+                <DisplayInfo>1</DisplayInfo>
+
+              </Member>
+            </Tuple>
+            <Tuple>
+              <Member Hierarchy="Education Level">
+                <UName>[Education Level].[All Education Levels]</UName>
+                <Caption>All Education Levels</Caption>
+                <LName>[Education Level].[(All)]</LName>
+
+                <LNum>0</LNum>
+                <DisplayInfo>5</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Customers">
+                <UName>[Customers].[USA].[CA]</UName>
+                <Caption>CA</Caption>
+                <LName>[Customers].[State Province]</LName>
+
+                <LNum>2</LNum>
+                <DisplayInfo>131117</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Product">
+                <UName>[Product].[Food].[Baking Goods]</UName>
+                <Caption>Baking Goods</Caption>
+                <LName>[Product].[Product Department]</LName>
+
+                <LNum>2</LNum>
+                <DisplayInfo>131074</DisplayInfo>
+              </Member>
+            </Tuple>
+            <Tuple>
+              <Member Hierarchy="Education Level">
+                <UName>[Education Level].[All Education Levels]</UName>
+
+                <Caption>All Education Levels</Caption>
+                <LName>[Education Level].[(All)]</LName>
+                <LNum>0</LNum>
+                <DisplayInfo>5</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Customers">
+                <UName>[Customers].[USA].[CA]</UName>
+
+                <Caption>CA</Caption>
+                <LName>[Customers].[State Province]</LName>
+                <LNum>2</LNum>
+                <DisplayInfo>131117</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Product">
+                <UName>[Product].[Food].[Breakfast Foods]</UName>
+
+                <Caption>Breakfast Foods</Caption>
+                <LName>[Product].[Product Department]</LName>
+                <LNum>2</LNum>
+                <DisplayInfo>131073</DisplayInfo>
+              </Member>
+            </Tuple>
+            <Tuple>
+
+              <Member Hierarchy="Education Level">
+                <UName>[Education Level].[All Education Levels]</UName>
+                <Caption>All Education Levels</Caption>
+                <LName>[Education Level].[(All)]</LName>
+                <LNum>0</LNum>
+                <DisplayInfo>5</DisplayInfo>
+
+              </Member>
+              <Member Hierarchy="Customers">
+                <UName>[Customers].[USA].[CA]</UName>
+                <Caption>CA</Caption>
+                <LName>[Customers].[State Province]</LName>
+                <LNum>2</LNum>
+                <DisplayInfo>131117</DisplayInfo>
+
+              </Member>
+              <Member Hierarchy="Product">
+                <UName>[Product].[Food].[Canned Foods]</UName>
+                <Caption>Canned Foods</Caption>
+                <LName>[Product].[Product Department]</LName>
+                <LNum>2</LNum>
+                <DisplayInfo>131080</DisplayInfo>
+
+              </Member>
+            </Tuple>
+            <Tuple>
+              <Member Hierarchy="Education Level">
+                <UName>[Education Level].[All Education Levels]</UName>
+                <Caption>All Education Levels</Caption>
+                <LName>[Education Level].[(All)]</LName>
+
+                <LNum>0</LNum>
+                <DisplayInfo>5</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Customers">
+                <UName>[Customers].[USA].[CA]</UName>
+                <Caption>CA</Caption>
+                <LName>[Customers].[State Province]</LName>
+
+                <LNum>2</LNum>
+                <DisplayInfo>131117</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Product">
+                <UName>[Product].[Food].[Canned Products]</UName>
+                <Caption>Canned Products</Caption>
+                <LName>[Product].[Product Department]</LName>
+
+                <LNum>2</LNum>
+                <DisplayInfo>131073</DisplayInfo>
+              </Member>
+            </Tuple>
+            <Tuple>
+              <Member Hierarchy="Education Level">
+                <UName>[Education Level].[All Education Levels]</UName>
+
+                <Caption>All Education Levels</Caption>
+                <LName>[Education Level].[(All)]</LName>
+                <LNum>0</LNum>
+                <DisplayInfo>5</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Customers">
+                <UName>[Customers].[USA].[CA]</UName>
+
+                <Caption>CA</Caption>
+                <LName>[Customers].[State Province]</LName>
+                <LNum>2</LNum>
+                <DisplayInfo>131117</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Product">
+                <UName>[Product].[Food].[Dairy]</UName>
+
+                <Caption>Dairy</Caption>
+                <LName>[Product].[Product Department]</LName>
+                <LNum>2</LNum>
+                <DisplayInfo>131073</DisplayInfo>
+              </Member>
+            </Tuple>
+            <Tuple>
+
+              <Member Hierarchy="Education Level">
+                <UName>[Education Level].[All Education Levels]</UName>
+                <Caption>All Education Levels</Caption>
+                <LName>[Education Level].[(All)]</LName>
+                <LNum>0</LNum>
+                <DisplayInfo>5</DisplayInfo>
+
+              </Member>
+              <Member Hierarchy="Customers">
+                <UName>[Customers].[USA].[CA]</UName>
+                <Caption>CA</Caption>
+                <LName>[Customers].[State Province]</LName>
+                <LNum>2</LNum>
+                <DisplayInfo>131117</DisplayInfo>
+
+              </Member>
+              <Member Hierarchy="Product">
+                <UName>[Product].[Food].[Deli]</UName>
+                <Caption>Deli</Caption>
+                <LName>[Product].[Product Department]</LName>
+                <LNum>2</LNum>
+                <DisplayInfo>131074</DisplayInfo>
+
+              </Member>
+            </Tuple>
+            <Tuple>
+              <Member Hierarchy="Education Level">
+                <UName>[Education Level].[All Education Levels]</UName>
+                <Caption>All Education Levels</Caption>
+                <LName>[Education Level].[(All)]</LName>
+
+                <LNum>0</LNum>
+                <DisplayInfo>5</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Customers">
+                <UName>[Customers].[USA].[CA]</UName>
+                <Caption>CA</Caption>
+                <LName>[Customers].[State Province]</LName>
+
+                <LNum>2</LNum>
+                <DisplayInfo>131117</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Product">
+                <UName>[Product].[Food].[Eggs]</UName>
+                <Caption>Eggs</Caption>
+                <LName>[Product].[Product Department]</LName>
+
+                <LNum>2</LNum>
+                <DisplayInfo>131073</DisplayInfo>
+              </Member>
+            </Tuple>
+            <Tuple>
+              <Member Hierarchy="Education Level">
+                <UName>[Education Level].[All Education Levels]</UName>
+
+                <Caption>All Education Levels</Caption>
+                <LName>[Education Level].[(All)]</LName>
+                <LNum>0</LNum>
+                <DisplayInfo>5</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Customers">
+                <UName>[Customers].[USA].[CA]</UName>
+
+                <Caption>CA</Caption>
+                <LName>[Customers].[State Province]</LName>
+                <LNum>2</LNum>
+                <DisplayInfo>131117</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Product">
+                <UName>[Product].[Food].[Frozen Foods]</UName>
+
+                <Caption>Frozen Foods</Caption>
+                <LName>[Product].[Product Department]</LName>
+                <LNum>2</LNum>
+                <DisplayInfo>131078</DisplayInfo>
+              </Member>
+            </Tuple>
+            <Tuple>
+
+              <Member Hierarchy="Education Level">
+                <UName>[Education Level].[All Education Levels]</UName>
+                <Caption>All Education Levels</Caption>
+                <LName>[Education Level].[(All)]</LName>
+                <LNum>0</LNum>
+                <DisplayInfo>5</DisplayInfo>
+
+              </Member>
+              <Member Hierarchy="Customers">
+                <UName>[Customers].[USA].[CA]</UName>
+                <Caption>CA</Caption>
+                <LName>[Customers].[State Province]</LName>
+                <LNum>2</LNum>
+                <DisplayInfo>131117</DisplayInfo>
+
+              </Member>
+              <Member Hierarchy="Product">
+                <UName>[Product].[Food].[Meat]</UName>
+                <Caption>Meat</Caption>
+                <LName>[Product].[Product Department]</LName>
+                <LNum>2</LNum>
+                <DisplayInfo>131073</DisplayInfo>
+
+              </Member>
+            </Tuple>
+            <Tuple>
+              <Member Hierarchy="Education Level">
+                <UName>[Education Level].[All Education Levels]</UName>
+                <Caption>All Education Levels</Caption>
+                <LName>[Education Level].[(All)]</LName>
+
+                <LNum>0</LNum>
+                <DisplayInfo>5</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Customers">
+                <UName>[Customers].[USA].[CA]</UName>
+                <Caption>CA</Caption>
+                <LName>[Customers].[State Province]</LName>
+
+                <LNum>2</LNum>
+                <DisplayInfo>131117</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Product">
+                <UName>[Product].[Food].[Produce]</UName>
+                <Caption>Produce</Caption>
+                <LName>[Product].[Product Department]</LName>
+
+                <LNum>2</LNum>
+                <DisplayInfo>131076</DisplayInfo>
+              </Member>
+            </Tuple>
+            <Tuple>
+              <Member Hierarchy="Education Level">
+                <UName>[Education Level].[All Education Levels]</UName>
+
+                <Caption>All Education Levels</Caption>
+                <LName>[Education Level].[(All)]</LName>
+                <LNum>0</LNum>
+                <DisplayInfo>5</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Customers">
+                <UName>[Customers].[USA].[CA]</UName>
+
+                <Caption>CA</Caption>
+                <LName>[Customers].[State Province]</LName>
+                <LNum>2</LNum>
+                <DisplayInfo>131117</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Product">
+                <UName>[Product].[Food].[Seafood]</UName>
+
+                <Caption>Seafood</Caption>
+                <LName>[Product].[Product Department]</LName>
+                <LNum>2</LNum>
+                <DisplayInfo>131073</DisplayInfo>
+              </Member>
+            </Tuple>
+            <Tuple>
+
+              <Member Hierarchy="Education Level">
+                <UName>[Education Level].[All Education Levels]</UName>
+                <Caption>All Education Levels</Caption>
+                <LName>[Education Level].[(All)]</LName>
+                <LNum>0</LNum>
+                <DisplayInfo>5</DisplayInfo>
+
+              </Member>
+              <Member Hierarchy="Customers">
+                <UName>[Customers].[USA].[CA]</UName>
+                <Caption>CA</Caption>
+                <LName>[Customers].[State Province]</LName>
+                <LNum>2</LNum>
+                <DisplayInfo>131117</DisplayInfo>
+
+              </Member>
+              <Member Hierarchy="Product">
+                <UName>[Product].[Food].[Snack Foods]</UName>
+                <Caption>Snack Foods</Caption>
+                <LName>[Product].[Product Department]</LName>
+                <LNum>2</LNum>
+                <DisplayInfo>131073</DisplayInfo>
+
+              </Member>
+            </Tuple>
+            <Tuple>
+              <Member Hierarchy="Education Level">
+                <UName>[Education Level].[All Education Levels]</UName>
+                <Caption>All Education Levels</Caption>
+                <LName>[Education Level].[(All)]</LName>
+
+                <LNum>0</LNum>
+                <DisplayInfo>5</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Customers">
+                <UName>[Customers].[USA].[CA]</UName>
+                <Caption>CA</Caption>
+                <LName>[Customers].[State Province]</LName>
+
+                <LNum>2</LNum>
+                <DisplayInfo>131117</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Product">
+                <UName>[Product].[Food].[Snacks]</UName>
+                <Caption>Snacks</Caption>
+                <LName>[Product].[Product Department]</LName>
+
+                <LNum>2</LNum>
+                <DisplayInfo>131073</DisplayInfo>
+              </Member>
+            </Tuple>
+            <Tuple>
+              <Member Hierarchy="Education Level">
+                <UName>[Education Level].[All Education Levels]</UName>
+
+                <Caption>All Education Levels</Caption>
+                <LName>[Education Level].[(All)]</LName>
+                <LNum>0</LNum>
+                <DisplayInfo>5</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Customers">
+                <UName>[Customers].[USA].[CA]</UName>
+
+                <Caption>CA</Caption>
+                <LName>[Customers].[State Province]</LName>
+                <LNum>2</LNum>
+                <DisplayInfo>131117</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Product">
+                <UName>[Product].[Food].[Starchy Foods]</UName>
+
+                <Caption>Starchy Foods</Caption>
+                <LName>[Product].[Product Department]</LName>
+                <LNum>2</LNum>
+                <DisplayInfo>131073</DisplayInfo>
+              </Member>
+            </Tuple>
+            <Tuple>
+
+              <Member Hierarchy="Education Level">
+                <UName>[Education Level].[All Education Levels]</UName>
+                <Caption>All Education Levels</Caption>
+                <LName>[Education Level].[(All)]</LName>
+                <LNum>0</LNum>
+                <DisplayInfo>5</DisplayInfo>
+
+              </Member>
+              <Member Hierarchy="Customers">
+                <UName>[Customers].[USA].[CA]</UName>
+                <Caption>CA</Caption>
+                <LName>[Customers].[State Province]</LName>
+                <LNum>2</LNum>
+                <DisplayInfo>131117</DisplayInfo>
+
+              </Member>
+              <Member Hierarchy="Product">
+                <UName>[Product].[Non-Consumable]</UName>
+                <Caption>Non-Consumable</Caption>
+                <LName>[Product].[Product Family]</LName>
+                <LNum>1</LNum>
+                <DisplayInfo>5</DisplayInfo>
+
+              </Member>
+            </Tuple>
+            <Tuple>
+              <Member Hierarchy="Education Level">
+                <UName>[Education Level].[All Education Levels]</UName>
+                <Caption>All Education Levels</Caption>
+                <LName>[Education Level].[(All)]</LName>
+
+                <LNum>0</LNum>
+                <DisplayInfo>5</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Customers">
+                <UName>[Customers].[USA].[OR]</UName>
+                <Caption>OR</Caption>
+                <LName>[Customers].[State Province]</LName>
+
+                <LNum>2</LNum>
+                <DisplayInfo>131083</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Product">
+                <UName>[Product].[All Products]</UName>
+                <Caption>All Products</Caption>
+                <LName>[Product].[(All)]</LName>
+
+                <LNum>0</LNum>
+                <DisplayInfo>3</DisplayInfo>
+              </Member>
+            </Tuple>
+            <Tuple>
+              <Member Hierarchy="Education Level">
+                <UName>[Education Level].[All Education Levels]</UName>
+
+                <Caption>All Education Levels</Caption>
+                <LName>[Education Level].[(All)]</LName>
+                <LNum>0</LNum>
+                <DisplayInfo>5</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Customers">
+                <UName>[Customers].[USA].[WA]</UName>
+
+                <Caption>WA</Caption>
+                <LName>[Customers].[State Province]</LName>
+                <LNum>2</LNum>
+                <DisplayInfo>131094</DisplayInfo>
+              </Member>
+              <Member Hierarchy="Product">
+                <UName>[Product].[All Products]</UName>
+
+                <Caption>All Products</Caption>
+                <LName>[Product].[(All)]</LName>
+                <LNum>0</LNum>
+                <DisplayInfo>3</DisplayInfo>
+              </Member>
+            </Tuple>
+          </Tuples>
+
+        </Axis>
+        <Axis name="SlicerAxis">
+          <Tuples>
+            <Tuple>
+              <Member Hierarchy="Time">
+                <UName>[Time].[1997]</UName>
+                <Caption>1997</Caption>
+                <LName>[Time].[Year]</LName>
+
+                <LNum>0</LNum>
+                <DisplayInfo>4</DisplayInfo>
+              </Member>
+            </Tuple>
+          </Tuples>
+        </Axis>
+      </Axes>
+      <CellData>
+
+        <Cell CellOrdinal="0">
+          <Value xsi:type="xsd:double">266773</Value>
+          <FmtValue>266,773</FmtValue>
+          <FormatString>Standard</FormatString>
+        </Cell>
+        <Cell CellOrdinal="1">
+          <Value xsi:type="xsd:double">225627.2336</Value>
+
+          <FmtValue>225,627.23</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="2">
+          <Value xsi:type="xsd:double">111777.479</Value>
+          <FmtValue>111,777.48</FmtValue>
+          <FormatString>#,###.00</FormatString>
+
+        </Cell>
+        <Cell CellOrdinal="5">
+          <Value xsi:type="xsd:double">111777.479</Value>
+          <FmtValue>111,777.48</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="6">
+
+          <Value xsi:type="xsd:double">113849.7546</Value>
+          <FmtValue>113,849.75</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="7">
+          <Value xsi:type="xsd:double">565238.13</Value>
+          <FmtValue>565,238.13</FmtValue>
+
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="8">
+          <Value xsi:type="xsd:double">280226.21</Value>
+          <FmtValue>280,226.21</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+
+        <Cell CellOrdinal="9">
+          <Value xsi:type="xsd:double">285011.92</Value>
+          <FmtValue>285,011.92</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="30">
+          <Value xsi:type="xsd:double">266773</Value>
+
+          <FmtValue>266,773</FmtValue>
+          <FormatString>Standard</FormatString>
+        </Cell>
+        <Cell CellOrdinal="31">
+          <Value xsi:type="xsd:double">225627.2336</Value>
+          <FmtValue>225,627.23</FmtValue>
+          <FormatString>#,###.00</FormatString>
+
+        </Cell>
+        <Cell CellOrdinal="32">
+          <Value xsi:type="xsd:double">111777.479</Value>
+          <FmtValue>111,777.48</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="35">
+
+          <Value xsi:type="xsd:double">111777.479</Value>
+          <FmtValue>111,777.48</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="36">
+          <Value xsi:type="xsd:double">113849.7546</Value>
+          <FmtValue>113,849.75</FmtValue>
+
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="37">
+          <Value xsi:type="xsd:double">565238.13</Value>
+          <FmtValue>565,238.13</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+
+        <Cell CellOrdinal="38">
+          <Value xsi:type="xsd:double">280226.21</Value>
+          <FmtValue>280,226.21</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="39">
+          <Value xsi:type="xsd:double">285011.92</Value>
+
+          <FmtValue>285,011.92</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="40">
+          <Value xsi:type="xsd:double">74748</Value>
+          <FmtValue>74,748</FmtValue>
+          <FormatString>Standard</FormatString>
+
+        </Cell>
+        <Cell CellOrdinal="41">
+          <Value xsi:type="xsd:double">63530.4251</Value>
+          <FmtValue>63,530.43</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="42">
+
+          <Value xsi:type="xsd:double">31591.6194</Value>
+          <FmtValue>31,591.62</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="45">
+          <Value xsi:type="xsd:double">31591.6194</Value>
+          <FmtValue>31,591.62</FmtValue>
+
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="46">
+          <Value xsi:type="xsd:double">31938.8057</Value>
+          <FmtValue>31,938.81</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+
+        <Cell CellOrdinal="47">
+          <Value xsi:type="xsd:double">159167.84</Value>
+          <FmtValue>159,167.84</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="48">
+          <Value xsi:type="xsd:double">79050.79</Value>
+
+          <FmtValue>79,050.79</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="49">
+          <Value xsi:type="xsd:double">80117.05</Value>
+          <FmtValue>80,117.05</FmtValue>
+          <FormatString>#,###.00</FormatString>
+
+        </Cell>
+        <Cell CellOrdinal="50">
+          <Value xsi:type="xsd:double">7102</Value>
+          <FmtValue>7,102</FmtValue>
+          <FormatString>Standard</FormatString>
+        </Cell>
+        <Cell CellOrdinal="51">
+
+          <Value xsi:type="xsd:double">5662.2736</Value>
+          <FmtValue>5,662.27</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="52">
+          <Value xsi:type="xsd:double">2831.3324</Value>
+          <FmtValue>2,831.33</FmtValue>
+
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="55">
+          <Value xsi:type="xsd:double">2831.3324</Value>
+          <FmtValue>2,831.33</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+
+        <Cell CellOrdinal="56">
+          <Value xsi:type="xsd:double">2830.9412</Value>
+          <FmtValue>2,830.94</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="57">
+          <Value xsi:type="xsd:double">14203.24</Value>
+
+          <FmtValue>14,203.24</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="58">
+          <Value xsi:type="xsd:double">7108.45</Value>
+          <FmtValue>7,108.45</FmtValue>
+          <FormatString>#,###.00</FormatString>
+
+        </Cell>
+        <Cell CellOrdinal="59">
+          <Value xsi:type="xsd:double">7094.79</Value>
+          <FmtValue>7,094.79</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="60">
+
+          <Value xsi:type="xsd:double">53656</Value>
+          <FmtValue>53,656</FmtValue>
+          <FormatString>Standard</FormatString>
+        </Cell>
+        <Cell CellOrdinal="61">
+          <Value xsi:type="xsd:double">45980.3504</Value>
+          <FmtValue>45,980.35</FmtValue>
+
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="62">
+          <Value xsi:type="xsd:double">23010.702</Value>
+          <FmtValue>23,010.70</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+
+        <Cell CellOrdinal="65">
+          <Value xsi:type="xsd:double">23010.702</Value>
+          <FmtValue>23,010.70</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="66">
+          <Value xsi:type="xsd:double">22969.6484</Value>
+
+          <FmtValue>22,969.65</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="67">
+          <Value xsi:type="xsd:double">115193.17</Value>
+          <FmtValue>115,193.17</FmtValue>
+          <FormatString>#,###.00</FormatString>
+
+        </Cell>
+        <Cell CellOrdinal="68">
+          <Value xsi:type="xsd:double">57530.61</Value>
+          <FmtValue>57,530.61</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="69">
+
+          <Value xsi:type="xsd:double">57662.56</Value>
+          <FmtValue>57,662.56</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="70">
+          <Value xsi:type="xsd:double">2150</Value>
+          <FmtValue>2,150</FmtValue>
+
+          <FormatString>Standard</FormatString>
+        </Cell>
+        <Cell CellOrdinal="71">
+          <Value xsi:type="xsd:double">1829.428</Value>
+          <FmtValue>1,829.43</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+
+        <Cell CellOrdinal="72">
+          <Value xsi:type="xsd:double">887.8731</Value>
+          <FmtValue>887.87</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="75">
+          <Value xsi:type="xsd:double">887.8731</Value>
+
+          <FmtValue>887.87</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="76">
+          <Value xsi:type="xsd:double">941.5549</Value>
+          <FmtValue>941.55</FmtValue>
+          <FormatString>#,###.00</FormatString>
+
+        </Cell>
+        <Cell CellOrdinal="77">
+          <Value xsi:type="xsd:double">4619.81</Value>
+          <FmtValue>4,619.81</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="78">
+
+          <Value xsi:type="xsd:double">2227.05</Value>
+          <FmtValue>2,227.05</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="79">
+          <Value xsi:type="xsd:double">2392.76</Value>
+          <FmtValue>2,392.76</FmtValue>
+
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="80">
+          <Value xsi:type="xsd:double">5799</Value>
+          <FmtValue>5,799</FmtValue>
+          <FormatString>Standard</FormatString>
+        </Cell>
+
+        <Cell CellOrdinal="81">
+          <Value xsi:type="xsd:double">4442.5101</Value>
+          <FmtValue>4,442.51</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="82">
+          <Value xsi:type="xsd:double">2077.2999</Value>
+
+          <FmtValue>2,077.30</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="85">
+          <Value xsi:type="xsd:double">2077.2999</Value>
+          <FmtValue>2,077.30</FmtValue>
+          <FormatString>#,###.00</FormatString>
+
+        </Cell>
+        <Cell CellOrdinal="86">
+          <Value xsi:type="xsd:double">2365.2102</Value>
+          <FmtValue>2,365.21</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="87">
+
+          <Value xsi:type="xsd:double">11217.84</Value>
+          <FmtValue>11,217.84</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="88">
+          <Value xsi:type="xsd:double">5213.19</Value>
+          <FmtValue>5,213.19</FmtValue>
+
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="89">
+          <Value xsi:type="xsd:double">6004.65</Value>
+          <FmtValue>6,004.65</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+
+        <Cell CellOrdinal="90">
+          <Value xsi:type="xsd:double">938</Value>
+          <FmtValue>938</FmtValue>
+          <FormatString>Standard</FormatString>
+        </Cell>
+        <Cell CellOrdinal="91">
+          <Value xsi:type="xsd:double">793.9737</Value>
+
+          <FmtValue>793.97</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="92">
+          <Value xsi:type="xsd:double">482.8707</Value>
+          <FmtValue>482.87</FmtValue>
+          <FormatString>#,###.00</FormatString>
+
+        </Cell>
+        <Cell CellOrdinal="95">
+          <Value xsi:type="xsd:double">482.8707</Value>
+          <FmtValue>482.87</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="96">
+
+          <Value xsi:type="xsd:double">311.103</Value>
+          <FmtValue>311.10</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="97">
+          <Value xsi:type="xsd:double">2000.55</Value>
+          <FmtValue>2,000.55</FmtValue>
+
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="98">
+          <Value xsi:type="xsd:double">1212.41</Value>
+          <FmtValue>1,212.41</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+
+        <Cell CellOrdinal="99">
+          <Value xsi:type="xsd:double">788.14</Value>
+          <FmtValue>788.14</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="100">
+          <Value xsi:type="xsd:double">5268</Value>
+
+          <FmtValue>5,268</FmtValue>
+          <FormatString>Standard</FormatString>
+        </Cell>
+        <Cell CellOrdinal="101">
+          <Value xsi:type="xsd:double">4438.2205</Value>
+          <FmtValue>4,438.22</FmtValue>
+          <FormatString>#,###.00</FormatString>
+
+        </Cell>
+        <Cell CellOrdinal="102">
+          <Value xsi:type="xsd:double">2267.0096</Value>
+          <FmtValue>2,267.01</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="105">
+
+          <Value xsi:type="xsd:double">2267.0096</Value>
+          <FmtValue>2,267.01</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="106">
+          <Value xsi:type="xsd:double">2171.2109</Value>
+          <FmtValue>2,171.21</FmtValue>
+
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="107">
+          <Value xsi:type="xsd:double">11085.92</Value>
+          <FmtValue>11,085.92</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+
+        <Cell CellOrdinal="108">
+          <Value xsi:type="xsd:double">5617.98</Value>
+          <FmtValue>5,617.98</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="109">
+          <Value xsi:type="xsd:double">5467.94</Value>
+
+          <FmtValue>5,467.94</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="110">
+          <Value xsi:type="xsd:double">448</Value>
+          <FmtValue>448</FmtValue>
+          <FormatString>Standard</FormatString>
+
+        </Cell>
+        <Cell CellOrdinal="111">
+          <Value xsi:type="xsd:double">336.7247</Value>
+          <FmtValue>336.72</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="112">
+
+          <Value xsi:type="xsd:double">140.1937</Value>
+          <FmtValue>140.19</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="115">
+          <Value xsi:type="xsd:double">140.1937</Value>
+          <FmtValue>140.19</FmtValue>
+
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="116">
+          <Value xsi:type="xsd:double">196.531</Value>
+          <FmtValue>196.53</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+
+        <Cell CellOrdinal="117">
+          <Value xsi:type="xsd:double">861.94</Value>
+          <FmtValue>861.94</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="118">
+          <Value xsi:type="xsd:double">357.65</Value>
+
+          <FmtValue>357.65</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="119">
+          <Value xsi:type="xsd:double">504.29</Value>
+          <FmtValue>504.29</FmtValue>
+          <FormatString>#,###.00</FormatString>
+
+        </Cell>
+        <Cell CellOrdinal="120">
+          <Value xsi:type="xsd:double">3534</Value>
+          <FmtValue>3,534</FmtValue>
+          <FormatString>Standard</FormatString>
+        </Cell>
+        <Cell CellOrdinal="121">
+
+          <Value xsi:type="xsd:double">3343.1151</Value>
+          <FmtValue>3,343.12</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="122">
+          <Value xsi:type="xsd:double">1752.8402</Value>
+          <FmtValue>1,752.84</FmtValue>
+
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="125">
+          <Value xsi:type="xsd:double">1752.8402</Value>
+          <FmtValue>1,752.84</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+
+        <Cell CellOrdinal="126">
+          <Value xsi:type="xsd:double">1590.2749</Value>
+          <FmtValue>1,590.27</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="127">
+          <Value xsi:type="xsd:double">8368.87</Value>
+
+          <FmtValue>8,368.87</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="128">
+          <Value xsi:type="xsd:double">4385.54</Value>
+          <FmtValue>4,385.54</FmtValue>
+          <FormatString>#,###.00</FormatString>
+
+        </Cell>
+        <Cell CellOrdinal="129">
+          <Value xsi:type="xsd:double">3983.33</Value>
+          <FmtValue>3,983.33</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="130">
+
+          <Value xsi:type="xsd:double">3393</Value>
+          <FmtValue>3,393</FmtValue>
+          <FormatString>Standard</FormatString>
+        </Cell>
+        <Cell CellOrdinal="131">
+          <Value xsi:type="xsd:double">2842.1782</Value>
+          <FmtValue>2,842.18</FmtValue>
+
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="132">
+          <Value xsi:type="xsd:double">1470.7496</Value>
+          <FmtValue>1,470.75</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+
+        <Cell CellOrdinal="135">
+          <Value xsi:type="xsd:double">1470.7496</Value>
+          <FmtValue>1,470.75</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="136">
+          <Value xsi:type="xsd:double">1371.4286</Value>
+
+          <FmtValue>1,371.43</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="137">
+          <Value xsi:type="xsd:double">7132.95</Value>
+          <FmtValue>7,132.95</FmtValue>
+          <FormatString>#,###.00</FormatString>
+
+        </Cell>
+        <Cell CellOrdinal="138">
+          <Value xsi:type="xsd:double">3693.87</Value>
+          <FmtValue>3,693.87</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="139">
+
+          <Value xsi:type="xsd:double">3439.08</Value>
+          <FmtValue>3,439.08</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="140">
+          <Value xsi:type="xsd:double">1116</Value>
+          <FmtValue>1,116</FmtValue>
+
+          <FormatString>Standard</FormatString>
+        </Cell>
+        <Cell CellOrdinal="141">
+          <Value xsi:type="xsd:double">1022.5285</Value>
+          <FmtValue>1,022.53</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+
+        <Cell CellOrdinal="142">
+          <Value xsi:type="xsd:double">457.7438</Value>
+          <FmtValue>457.74</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="145">
+          <Value xsi:type="xsd:double">457.7438</Value>
+
+          <FmtValue>457.74</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="146">
+          <Value xsi:type="xsd:double">564.7847</Value>
+          <FmtValue>564.78</FmtValue>
+          <FormatString>#,###.00</FormatString>
+
+        </Cell>
+        <Cell CellOrdinal="147">
+          <Value xsi:type="xsd:double">2530.01</Value>
+          <FmtValue>2,530.01</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="148">
+
+          <Value xsi:type="xsd:double">1132.88</Value>
+          <FmtValue>1,132.88</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="149">
+          <Value xsi:type="xsd:double">1397.13</Value>
+          <FmtValue>1,397.13</FmtValue>
+
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="150">
+          <Value xsi:type="xsd:double">7505</Value>
+          <FmtValue>7,505</FmtValue>
+          <FormatString>Standard</FormatString>
+        </Cell>
+
+        <Cell CellOrdinal="151">
+          <Value xsi:type="xsd:double">6252.8152</Value>
+          <FmtValue>6,252.82</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="152">
+          <Value xsi:type="xsd:double">3178.5712</Value>
+
+          <FmtValue>3,178.57</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="155">
+          <Value xsi:type="xsd:double">3178.5712</Value>
+          <FmtValue>3,178.57</FmtValue>
+          <FormatString>#,###.00</FormatString>
+
+        </Cell>
+        <Cell CellOrdinal="156">
+          <Value xsi:type="xsd:double">3074.244</Value>
+          <FmtValue>3,074.24</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="157">
+
+          <Value xsi:type="xsd:double">15634.34</Value>
+          <FmtValue>15,634.34</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="158">
+          <Value xsi:type="xsd:double">7888.72</Value>
+          <FmtValue>7,888.72</FmtValue>
+
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="159">
+          <Value xsi:type="xsd:double">7745.62</Value>
+          <FmtValue>7,745.62</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+
+        <Cell CellOrdinal="160">
+          <Value xsi:type="xsd:double">527</Value>
+          <FmtValue>527</FmtValue>
+          <FormatString>Standard</FormatString>
+        </Cell>
+        <Cell CellOrdinal="161">
+          <Value xsi:type="xsd:double">452.8757</Value>
+
+          <FmtValue>452.88</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="162">
+          <Value xsi:type="xsd:double">215.4085</Value>
+          <FmtValue>215.41</FmtValue>
+          <FormatString>#,###.00</FormatString>
+
+        </Cell>
+        <Cell CellOrdinal="165">
+          <Value xsi:type="xsd:double">215.4085</Value>
+          <FmtValue>215.41</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="166">
+
+          <Value xsi:type="xsd:double">237.4672</Value>
+          <FmtValue>237.47</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="167">
+          <Value xsi:type="xsd:double">1115.46</Value>
+          <FmtValue>1,115.46</FmtValue>
+
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="168">
+          <Value xsi:type="xsd:double">536.29</Value>
+          <FmtValue>536.29</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+
+        <Cell CellOrdinal="169">
+          <Value xsi:type="xsd:double">579.17</Value>
+          <FmtValue>579.17</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="170">
+          <Value xsi:type="xsd:double">10588</Value>
+
+          <FmtValue>10,588</FmtValue>
+          <FormatString>Standard</FormatString>
+        </Cell>
+        <Cell CellOrdinal="171">
+          <Value xsi:type="xsd:double">9203.9786</Value>
+          <FmtValue>9,203.98</FmtValue>
+          <FormatString>#,###.00</FormatString>
+
+        </Cell>
+        <Cell CellOrdinal="172">
+          <Value xsi:type="xsd:double">4539.9461</Value>
+          <FmtValue>4,539.95</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="175">
+
+          <Value xsi:type="xsd:double">4539.9461</Value>
+          <FmtValue>4,539.95</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="176">
+          <Value xsi:type="xsd:double">4664.0325</Value>
+          <FmtValue>4,664.03</FmtValue>
+
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="177">
+          <Value xsi:type="xsd:double">23130.17</Value>
+          <FmtValue>23,130.17</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+
+        <Cell CellOrdinal="178">
+          <Value xsi:type="xsd:double">11369.48</Value>
+          <FmtValue>11,369.48</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="179">
+          <Value xsi:type="xsd:double">11760.69</Value>
+
+          <FmtValue>11,760.69</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="180">
+          <Value xsi:type="xsd:double">441</Value>
+          <FmtValue>441</FmtValue>
+          <FormatString>Standard</FormatString>
+
+        </Cell>
+        <Cell CellOrdinal="181">
+          <Value xsi:type="xsd:double">402.6434</Value>
+          <FmtValue>402.64</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="182">
+
+          <Value xsi:type="xsd:double">228.769</Value>
+          <FmtValue>228.77</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="185">
+          <Value xsi:type="xsd:double">228.769</Value>
+          <FmtValue>228.77</FmtValue>
+
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="186">
+          <Value xsi:type="xsd:double">173.8744</Value>
+          <FmtValue>173.87</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+
+        <Cell CellOrdinal="187">
+          <Value xsi:type="xsd:double">1017.3</Value>
+          <FmtValue>1,017.30</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="188">
+          <Value xsi:type="xsd:double">583.08</Value>
+
+          <FmtValue>583.08</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="189">
+          <Value xsi:type="xsd:double">434.22</Value>
+          <FmtValue>434.22</FmtValue>
+          <FormatString>#,###.00</FormatString>
+
+        </Cell>
+        <Cell CellOrdinal="190">
+          <Value xsi:type="xsd:double">8543</Value>
+          <FmtValue>8,543</FmtValue>
+          <FormatString>Standard</FormatString>
+        </Cell>
+        <Cell CellOrdinal="191">
+
+          <Value xsi:type="xsd:double">7656.5202</Value>
+          <FmtValue>7,656.52</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="192">
+          <Value xsi:type="xsd:double">3737.9301</Value>
+          <FmtValue>3,737.93</FmtValue>
+
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="195">
+          <Value xsi:type="xsd:double">3737.9301</Value>
+          <FmtValue>3,737.93</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+
+        <Cell CellOrdinal="196">
+          <Value xsi:type="xsd:double">3918.5901</Value>
+          <FmtValue>3,918.59</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="197">
+          <Value xsi:type="xsd:double">19072.42</Value>
+
+          <FmtValue>19,072.42</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="198">
+          <Value xsi:type="xsd:double">9377.27</Value>
+          <FmtValue>9,377.27</FmtValue>
+          <FormatString>#,###.00</FormatString>
+
+        </Cell>
+        <Cell CellOrdinal="199">
+          <Value xsi:type="xsd:double">9695.15</Value>
+          <FmtValue>9,695.15</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="200">
+
+          <Value xsi:type="xsd:double">1958</Value>
+          <FmtValue>1,958</FmtValue>
+          <FormatString>Standard</FormatString>
+        </Cell>
+        <Cell CellOrdinal="201">
+          <Value xsi:type="xsd:double">1676.9194</Value>
+          <FmtValue>1,676.92</FmtValue>
+
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="202">
+          <Value xsi:type="xsd:double">898.4677</Value>
+          <FmtValue>898.47</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+
+        <Cell CellOrdinal="205">
+          <Value xsi:type="xsd:double">898.4677</Value>
+          <FmtValue>898.47</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="206">
+          <Value xsi:type="xsd:double">778.4517</Value>
+
+          <FmtValue>778.45</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="207">
+          <Value xsi:type="xsd:double">4192.5</Value>
+          <FmtValue>4,192.50</FmtValue>
+          <FormatString>#,###.00</FormatString>
+
+        </Cell>
+        <Cell CellOrdinal="208">
+          <Value xsi:type="xsd:double">2252.29</Value>
+          <FmtValue>2,252.29</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="209">
+
+          <Value xsi:type="xsd:double">1940.21</Value>
+          <FmtValue>1,940.21</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="210">
+          <Value xsi:type="xsd:double">1448</Value>
+          <FmtValue>1,448</FmtValue>
+
+          <FormatString>Standard</FormatString>
+        </Cell>
+        <Cell CellOrdinal="211">
+          <Value xsi:type="xsd:double">1285.9191</Value>
+          <FmtValue>1,285.92</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+
+        <Cell CellOrdinal="212">
+          <Value xsi:type="xsd:double">675.0288</Value>
+          <FmtValue>675.03</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="215">
+          <Value xsi:type="xsd:double">675.0288</Value>
+
+          <FmtValue>675.03</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="216">
+          <Value xsi:type="xsd:double">610.8903</Value>
+          <FmtValue>610.89</FmtValue>
+          <FormatString>#,###.00</FormatString>
+
+        </Cell>
+        <Cell CellOrdinal="217">
+          <Value xsi:type="xsd:double">3213.09</Value>
+          <FmtValue>3,213.09</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="218">
+
+          <Value xsi:type="xsd:double">1682.91</Value>
+          <FmtValue>1,682.91</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="219">
+          <Value xsi:type="xsd:double">1530.18</Value>
+          <FmtValue>1,530.18</FmtValue>
+
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="220">
+          <Value xsi:type="xsd:double">13990</Value>
+          <FmtValue>13,990</FmtValue>
+          <FormatString>Standard</FormatString>
+        </Cell>
+
+        <Cell CellOrdinal="221">
+          <Value xsi:type="xsd:double">11887.8011</Value>
+          <FmtValue>11,887.80</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="222">
+          <Value xsi:type="xsd:double">5749.585</Value>
+
+          <FmtValue>5,749.59</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="225">
+          <Value xsi:type="xsd:double">5749.585</Value>
+          <FmtValue>5,749.59</FmtValue>
+          <FormatString>#,###.00</FormatString>
+
+        </Cell>
+        <Cell CellOrdinal="226">
+          <Value xsi:type="xsd:double">6138.2161</Value>
+          <FmtValue>6,138.22</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="227">
+
+          <Value xsi:type="xsd:double">29771.43</Value>
+          <FmtValue>29,771.43</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="228">
+          <Value xsi:type="xsd:double">14411.73</Value>
+          <FmtValue>14,411.73</FmtValue>
+
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="229">
+          <Value xsi:type="xsd:double">15359.7</Value>
+          <FmtValue>15,359.70</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+
+        <Cell CellOrdinal="230">
+          <Value xsi:type="xsd:double">67659</Value>
+          <FmtValue>67,659</FmtValue>
+          <FormatString>Standard</FormatString>
+        </Cell>
+        <Cell CellOrdinal="231">
+          <Value xsi:type="xsd:double">56772.5006</Value>
+
+          <FmtValue>56,772.50</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="232">
+          <Value xsi:type="xsd:double">27864.5083</Value>
+          <FmtValue>27,864.51</FmtValue>
+          <FormatString>#,###.00</FormatString>
+
+        </Cell>
+        <Cell CellOrdinal="235">
+          <Value xsi:type="xsd:double">27864.5083</Value>
+          <FmtValue>27,864.51</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="236">
+
+          <Value xsi:type="xsd:double">28907.9923</Value>
+          <FmtValue>28,907.99</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="237">
+          <Value xsi:type="xsd:double">142277.07</Value>
+          <FmtValue>142,277.07</FmtValue>
+
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="238">
+          <Value xsi:type="xsd:double">69825.44</Value>
+          <FmtValue>69,825.44</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+
+        <Cell CellOrdinal="239">
+          <Value xsi:type="xsd:double">72451.63</Value>
+          <FmtValue>72,451.63</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="240">
+          <Value xsi:type="xsd:double">124366</Value>
+
+          <FmtValue>124,366</FmtValue>
+          <FormatString>Standard</FormatString>
+        </Cell>
+        <Cell CellOrdinal="241">
+          <Value xsi:type="xsd:double">105324.3079</Value>
+          <FmtValue>105,324.31</FmtValue>
+          <FormatString>#,###.00</FormatString>
+
+        </Cell>
+        <Cell CellOrdinal="242">
+          <Value xsi:type="xsd:double">52321.3513</Value>
+          <FmtValue>52,321.35</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="245">
+
+          <Value xsi:type="xsd:double">52321.3513</Value>
+          <FmtValue>52,321.35</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="246">
+          <Value xsi:type="xsd:double">53002.9566</Value>
+          <FmtValue>53,002.96</FmtValue>
+
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="247">
+          <Value xsi:type="xsd:double">263793.22</Value>
+          <FmtValue>263,793.22</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+
+        <Cell CellOrdinal="248">
+          <Value xsi:type="xsd:double">131349.98</Value>
+          <FmtValue>131,349.98</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+        <Cell CellOrdinal="249">
+          <Value xsi:type="xsd:double">132443.24</Value>
+
+          <FmtValue>132,443.24</FmtValue>
+          <FormatString>#,###.00</FormatString>
+        </Cell>
+      </CellData>
+    </root>
+  </cxmla:return>
+</cxmla:ExecuteResponse>
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
