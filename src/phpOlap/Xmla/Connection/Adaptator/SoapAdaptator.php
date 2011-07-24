@@ -143,7 +143,10 @@ class SoapAdaptator extends SoapClient implements AdaptatorInterface
 		$error = $result->getElementsByTagName('Fault');
 		if ($error->length > 0) {
 			$faultstring = $error->item(0)->getElementsByTagName('faultstring')->item(0)->nodeValue;
-			throw new AdaptatorException(sprintf('XMLA error : %s', $faultstring));
+			throw new AdaptatorException(sprintf('XMLA error : %s. Xml result : %s',
+			                                        $faultstring,
+			                                        htmlentities($result->saveXml())
+			                                    ));
 		}
 		
 		$this->requestsHistory[] = $request->saveXml();
