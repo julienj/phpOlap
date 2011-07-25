@@ -27,8 +27,7 @@ $connection = new Connection(new SoapAdaptator('http://localhost:8080/mondrian/x
 $database = $connection->getActivDatabase();
 $catalog = $connection->getActivCatalog();
 $schema = $connection->getActivSchema();
-$cubes = $connection->findCubes(null, array('CUBE_NAME' => 'Sales'));
-$cube = $cubes[0];
+$cube = $connection->findOneCube(null, array('CUBE_NAME' => 'Sales'));
 	
 ?>
 
