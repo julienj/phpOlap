@@ -21,19 +21,30 @@ use phpOlap\Xmla\Connection\Connection;
 use phpOlap\Xmla\Connection\Adaptator\SoapAdaptator;
 
 // for Mondrian
-$connection = new Connection(new SoapAdaptator('http://localhost:8080/mondrian/xmla'));
+$connection = new Connection(
+    new SoapAdaptator('http://localhost:8080/mondrian/xmla'),
+    array(
+            'DataSourceInfo' => 'Provider=Mondrian;DataSource=MondrianFoodMart;'
+            'CatalogName' => 'FoodMart',
+            'schemaName' => 'FoodMart'
+        )
+);
 // for Microsoft SQL Server Analysis Services
-//$connection = new Connection(new SoapAdaptator('http://192.168.1.13/olap/msmdpump.dll', 'user', 'pass'));
-$database = $connection->getActivDatabase();
-$catalog = $connection->getActivCatalog();
-$schema = $connection->getActivSchema();
+/*
+$connection = new Connection(
+    new SoapAdaptator('http://192.168.1.12/olap/msmdpump.dll', 'julien', 'juju'),
+    array(
+        'DataSourceInfo' => null,
+        'CatalogName' => 'Adventure Works DW 2008R2 SE'
+        )
+);
+*/
+
 $cube = $connection->findOneCube(null, array('CUBE_NAME' => 'Sales'));
 	
 ?>
 
-<p><label>Database :</label> <?php echo $database->getName() ?></p>
-<p><label>Catalog :</label> <?php echo $catalog->getName() ?></p>
-<p><label>Schema :</label> <?php echo $schema->getName() ?></p>
+
 <p><label>Cube :</label> <?php echo $cube->getName() ?></p>
 <ul id="cubeExploration">
 	<li class="measure">
@@ -104,6 +115,7 @@ use phpOlap\Xmla\Connection\Adaptator\SoapAdaptator;
 use phpOlap\Layout\Table\HtmlTableLayout;
 use phpOlap\Layout\Table\CsvTableLayout;
 
+$connection = ...
 
 $resultSet = $connection->statement("
 	select Hierarchize(Union(Union({([Measures].[Unit Sales], [Gender].[All Gender], [Marital Status].[All Marital Status])}, Union(Union(Crossjoin({[Measures].[Store Cost]}, {([Gender].[All Gender], [Marital Status].[All Marital Status])}), Crossjoin({[Measures].[Store Cost]}, Crossjoin([Gender].[All Gender].Children, {[Marital Status].[All Marital Status]}))), Crossjoin({[Measures].[Store Cost]}, Crossjoin({[Gender].[F]}, [Marital Status].[All Marital Status].Children)))), Crossjoin({[Measures].[Store Sales]}, Union(Crossjoin({[Gender].[All Gender]}, {[Marital Status].[All Marital Status]}), Crossjoin({[Gender].[All Gender]}, [Marital Status].[All Marital Status].Children))))) ON COLUMNS,

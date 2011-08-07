@@ -27,71 +27,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals($adaptator, $connection->getSoapAdaptator());
 	}	
 
-	public function testDatabase()
-	{		
-		$adaptator = $this->getAdaptator('
-				<root>
-					<row>
-						<DataSourceName>DataSourceNameDefault</DataSourceName>
-						<DataSourceDescription>DataSourceDescriptionDefault</DataSourceDescription>
-						<URL>UrlDefault</URL>
-						<DataSourceInfo>DataSourceInfoDefault</DataSourceInfo>
-						<ProviderName>ProviderNameDefault</ProviderName>
-						<ProviderType>ProviderTypeDefault</ProviderType>
-						<AuthenticationMode>AuthenticationModeDefault</AuthenticationMode>
-					</row>
-				</root>');
-		
-		$connection = new Connection($adaptator);
-		
-		$this->assertEquals('UrlDefault', $connection->getActivDatabase()->getUrl());
-		
-		$database2 = new Database();
-		$connection->setActivDatabase($database2);
-		$this->assertEquals($database2, $connection->getActivDatabase());
-	}
 
-	public function testCatalog()
-	{
-		$adaptator = $this->getAdaptator('
-				<root>
-					<row>
-						<CATALOG_NAME>CatalogDefault</CATALOG_NAME>
-						<DESCRIPTION>DescriptionDefault</DESCRIPTION>
-						<ROLES>California manager,No HR Cube</ROLES>
-					</row>
-				</root>');
-		
-		$connection = new Connection($adaptator);
-		$connection->setActivDatabase(new Database());
-		$this->assertEquals('CatalogDefault', $connection->getActivCatalog()->getName());
-		
-		$catalog2 = new Catalog();
-		$connection->setActivCatalog($catalog2);
-		$this->assertEquals($catalog2, $connection->getActivCatalog());
-	}
-
-	public function testSchema()
-	{
-		$adaptator = $this->getAdaptator('
-				<root>
-					<row>
-						<CATALOG_NAME>CatalogDefault</CATALOG_NAME>
-						<SCHEMA_NAME>SchemaDefault</SCHEMA_NAME>
-						<SCHEMA_OWNER/>
-					</row>
-				</root>');
-		
-		$connection = new Connection($adaptator);
-		$connection->setActivDatabase(new Database());
-		$connection->setActivCatalog(new Catalog());
-		$this->assertEquals('SchemaDefault', $connection->getActivSchema()->getName());
-		
-		$schema2 = new Schema();
-		$connection->setActivSchema($schema2);
-		$this->assertEquals($schema2, $connection->getActivSchema());
-	}
-	
 	public function testFindCubes()
 	{
 		$adaptator = $this->getAdaptator('
@@ -123,8 +59,6 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
 				</root>');
 		
 		$connection = new Connection($adaptator);
-		$connection->setActivDatabase(new Database());
-		$connection->setActivCatalog(new Catalog());
 		
 		$cubes = $connection->findCubes();
 
@@ -159,8 +93,6 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
 				</root>');
 		
 		$connection = new Connection($adaptator);
-		$connection->setActivDatabase(new Database());
-		$connection->setActivCatalog(new Catalog());
 		
 		$dims = $connection->findDimensions();
 
@@ -219,8 +151,6 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
 				</root>');
 		
 		$connection = new Connection($adaptator);
-		$connection->setActivDatabase(new Database());
-		$connection->setActivCatalog(new Catalog());
 		
 		$dims = $connection->findHierarchies();
 
@@ -253,8 +183,6 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
 				</root>');
 		
 		$connection = new Connection($adaptator);
-		$connection->setActivDatabase(new Database());
-		$connection->setActivCatalog(new Catalog());
 		
 		$level = $connection->findLevels();
 
@@ -282,8 +210,6 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
 				</root>');
 		
 		$connection = new Connection($adaptator);
-		$connection->setActivDatabase(new Database());
-		$connection->setActivCatalog(new Catalog());
 		
 		$measures = $connection->findMeasures();
 
@@ -308,8 +234,6 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
 				</root>');
 		
 		$connection = new Connection($adaptator);
-		$connection->setActivDatabase(new Database());
-		$connection->setActivCatalog(new Catalog());
 		
 		$measures = $connection->findMembers();
 
@@ -324,8 +248,6 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
 		$adaptator = $this->getStatementAdaptator($statementResult->saveXml());
 		
 		$connection = new Connection($adaptator);
-		$connection->setActivDatabase(new Database());
-		$connection->setActivCatalog(new Catalog());
 		
 		$resultSet = $connection->statement("SELECT {[Measures].[Org Salary]} ON columns, Hierarchize(Union({[Employees].[All Employees]}, [Employees].[All Employees].Children)) ON rows FROM HR WHERE ([Time].[1997])");
 		
@@ -353,6 +275,16 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
 		$array = array('Format' => 'myFormat');
 		$array = Connection::setDefault('Format', 'Tabular', $array);
 		$result = array('Format' => 'myFormat');
+		$this->assertEquals($array, $result);
+
+		$array = array('Format' => 'Tabular');
+		$array = Connection::setDefault('Format', null, $array);
+		$result = array('Format' => 'Tabular');
+		$this->assertEquals($array, $result);
+
+		$array = array();
+		$array = Connection::setDefault('Format', null, $array);
+		$result = array();
 		$this->assertEquals($array, $result);
 
 	}

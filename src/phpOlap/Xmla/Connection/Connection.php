@@ -29,22 +29,24 @@ class Connection  implements ConnectionInterface
 {	
 	protected $soapAdaptator;
 
-	protected $activDatabase;
+	protected $dataSourceInfo;
 
-	protected $activCatalog;
+	protected $catalogName;
 	
-	protected $activSchema;
+	protected $schemaName;
 				
     /**
      * Constructor.
      *
      * @param AdaptatorInterface $soapAdaptator Soap Adaptator
-     * @param Database $database Default database
+     * @param Array $restrictions Restriction (DataSourceInfo, CatalogName, SchemaName)
      */
-	function __construct(AdaptatorInterface $soapAdaptator, Database $database = null)
+	function __construct(AdaptatorInterface $soapAdaptator, Array $restrictions = null)
 	{
 		$this->soapAdaptator = $soapAdaptator;
-		$this->activDatabase = $database;
+		$this->dataSourceInfo = isset($restrictions['DataSourceInfo']) ? $restrictions['DataSourceInfo'] : null;
+		$this->catalogName = isset($restrictions['CatalogName']) ? $restrictions['CatalogName'] : null;
+		$this->schemaName = isset($restrictions['SchemaName']) ? $restrictions['SchemaName'] : null;
 	}
 	
     /**
@@ -54,64 +56,7 @@ class Connection  implements ConnectionInterface
 	{
 		return $this->soapAdaptator;
 	}
-	
-    /**
-     * {@inheritdoc}
-     */
-	public function getActivDatabase()
-	{
-		if (!$this->activDatabase) {
-			$this->activDatabase = $this->findOneDatabase();
-		}
-		return $this->activDatabase;
-	}
-	
-    /**
-     * {@inheritdoc}
-     */
-	public function setActivDatabase(Database $database)
-	{
-		$this->activDatabase = $database;
-	}
-	
-    /**
-     * {@inheritdoc}
-     */
-	public function getActivCatalog()
-	{
-		if (!$this->activCatalog) {
-			$this->activCatalog = $this->findOneCatalog();
-		}
-		return $this->activCatalog;
-	}
-	
-    /**
-     * {@inheritdoc}
-     */
-	public function setActivCatalog(Catalog $catalog)
-	{
-		$this->activCatalog = $catalog;
-	}
-	
-    /**
-     * {@inheritdoc}
-     */
-	public function getActivSchema()
-	{
-		if (!$this->activSchema) {
-			$this->activSchema = $this->findOneSchema();
-		}
-		return $this->activSchema;
-	}
-	
-    /**
-     * {@inheritdoc}
-     */
-	public function setActivSchema(Schema $schema)
-	{
-		$this->activSchema = $schema;
-	}
-	
+
     /**
      * {@inheritdoc}
      */
@@ -138,7 +83,7 @@ class Connection  implements ConnectionInterface
 	public function findCatalogs(Array $propertyList = null, Array $restrictionList = null)
 	{
 		$propertyList = self::setDefault('Format', 'Tabular', $propertyList);
-		$propertyList = self::setDefault('DataSourceInfo', $this->getActivDatabase()->getDataSourceInfo(), $propertyList);
+		$propertyList = self::setDefault('DataSourceInfo', $this->dataSourceInfo, $propertyList);
 		
 		$result = $this->getSoapAdaptator()->discover('DBSCHEMA_CATALOGS', $propertyList, $restrictionList);
 		
@@ -160,8 +105,8 @@ class Connection  implements ConnectionInterface
 	public function findSchemas(Array $propertyList = null, Array $restrictionList = null)
 	{
 		$propertyList = self::setDefault('Format', 'Tabular', $propertyList);
-		$propertyList = self::setDefault('DataSourceInfo', $this->getActivDatabase()->getDataSourceInfo(), $propertyList);
-		$propertyList = self::setDefault('Catalog', $this->getActivCatalog()->getName(), $propertyList);
+		$propertyList = self::setDefault('DataSourceInfo', $this->dataSourceInfo, $propertyList);
+		$propertyList = self::setDefault('Catalog', $this->catalogName, $propertyList);
 		
 		try{
 		    $result = $this->getSoapAdaptator()->discover('DBSCHEMA_SCHEMATA', $propertyList, $restrictionList);		    
@@ -187,11 +132,9 @@ class Connection  implements ConnectionInterface
 	public function findCubes(Array $propertyList = null, Array $restrictionList = null)
 	{
 		$propertyList = self::setDefault('Format', 'Tabular', $propertyList);
-		$propertyList = self::setDefault('DataSourceInfo', $this->getActivDatabase()->getDataSourceInfo(), $propertyList);
-		$propertyList = self::setDefault('Catalog', $this->getActivCatalog()->getName(), $propertyList);
-		if ($this->getActivSchema()) {
-            $restrictionList = self::setDefault('SCHEMA_NAME', $this->getActivSchema()->getName(), $restrictionList);
-        }
+		$propertyList = self::setDefault('DataSourceInfo', $this->dataSourceInfo, $propertyList);
+		$propertyList = self::setDefault('Catalog', $this->catalogName, $propertyList);
+        $restrictionList = self::setDefault('SCHEMA_NAME', $this->schemaName, $restrictionList);
 		
 		$result = $this->getSoapAdaptator()->discover('MDSCHEMA_CUBES', $propertyList, $restrictionList);
 		
@@ -213,11 +156,9 @@ class Connection  implements ConnectionInterface
 	public function findDimensions(Array $propertyList = null, Array $restrictionList = null)
 	{
 		$propertyList = self::setDefault('Format', 'Tabular', $propertyList);
-		$propertyList = self::setDefault('DataSourceInfo', $this->getActivDatabase()->getDataSourceInfo(), $propertyList);
-		$propertyList = self::setDefault('Catalog', $this->getActivCatalog()->getName(), $propertyList);
-		if ($this->getActivSchema()) {
-            $restrictionList = self::setDefault('SCHEMA_NAME', $this->getActivSchema()->getName(), $restrictionList);
-        }
+		$propertyList = self::setDefault('DataSourceInfo', $this->dataSourceInfo, $propertyList);
+		$propertyList = self::setDefault('Catalog', $this->catalogName, $propertyList);
+        $restrictionList = self::setDefault('SCHEMA_NAME', $this->schemaName, $restrictionList);
 		
 		$result = $this->getSoapAdaptator()->discover('MDSCHEMA_DIMENSIONS', $propertyList, $restrictionList);
 		
@@ -239,11 +180,9 @@ class Connection  implements ConnectionInterface
 	public function findHierarchies(Array $propertyList = null, Array $restrictionList = null)
 	{
 		$propertyList = self::setDefault('Format', 'Tabular', $propertyList);
-		$propertyList = self::setDefault('DataSourceInfo', $this->getActivDatabase()->getDataSourceInfo(), $propertyList);
-		$propertyList = self::setDefault('Catalog', $this->getActivCatalog()->getName(), $propertyList);
-		if ($this->getActivSchema()) {
-            $restrictionList = self::setDefault('SCHEMA_NAME', $this->getActivSchema()->getName(), $restrictionList);
-        }
+		$propertyList = self::setDefault('DataSourceInfo', $this->dataSourceInfo, $propertyList);
+		$propertyList = self::setDefault('Catalog', $this->catalogName, $propertyList);
+        $restrictionList = self::setDefault('SCHEMA_NAME', $this->schemaName, $restrictionList);
 		
 		$result = $this->getSoapAdaptator()->discover('MDSCHEMA_HIERARCHIES', $propertyList, $restrictionList);
 		
@@ -266,11 +205,9 @@ class Connection  implements ConnectionInterface
 	public function findLevels(Array $propertyList = null, Array $restrictionList = null)
 	{
 		$propertyList = self::setDefault('Format', 'Tabular', $propertyList);
-		$propertyList = self::setDefault('DataSourceInfo', $this->getActivDatabase()->getDataSourceInfo(), $propertyList);
-		$propertyList = self::setDefault('Catalog', $this->getActivCatalog()->getName(), $propertyList);
-		if ($this->getActivSchema()) {
-            $restrictionList = self::setDefault('SCHEMA_NAME', $this->getActivSchema()->getName(), $restrictionList);
-        }
+		$propertyList = self::setDefault('DataSourceInfo', $this->dataSourceInfo, $propertyList);
+		$propertyList = self::setDefault('Catalog', $this->catalogName, $propertyList);
+        $restrictionList = self::setDefault('SCHEMA_NAME', $this->schemaName, $restrictionList);
 		
 		$result = $this->getSoapAdaptator()->discover('MDSCHEMA_LEVELS', $propertyList, $restrictionList);
 		
@@ -292,11 +229,9 @@ class Connection  implements ConnectionInterface
 	public function findMembers(Array $propertyList = null, Array $restrictionList = null)
 	{
 		$propertyList = self::setDefault('Format', 'Tabular', $propertyList);
-		$propertyList = self::setDefault('DataSourceInfo', $this->getActivDatabase()->getDataSourceInfo(), $propertyList);
-		$propertyList = self::setDefault('Catalog', $this->getActivCatalog()->getName(), $propertyList);
-		if ($this->getActivSchema()) {
-            $restrictionList = self::setDefault('SCHEMA_NAME', $this->getActivSchema()->getName(), $restrictionList);
-        }
+		$propertyList = self::setDefault('DataSourceInfo', $this->dataSourceInfo, $propertyList);
+		$propertyList = self::setDefault('Catalog', $this->catalogName, $propertyList);
+        $restrictionList = self::setDefault('SCHEMA_NAME', $this->schemaName, $restrictionList);
 		
 		$result = $this->getSoapAdaptator()->discover('MDSCHEMA_MEMBERS', $propertyList, $restrictionList);
 		
@@ -318,11 +253,9 @@ class Connection  implements ConnectionInterface
 	public function findMeasures(Array $propertyList = null, Array $restrictionList = null)
 	{
 		$propertyList = self::setDefault('Format', 'Tabular', $propertyList);
-		$propertyList = self::setDefault('DataSourceInfo', $this->getActivDatabase()->getDataSourceInfo(), $propertyList);
-		$propertyList = self::setDefault('Catalog', $this->getActivCatalog()->getName(), $propertyList);
-		if ($this->getActivSchema()) {
-            $restrictionList = self::setDefault('SCHEMA_NAME', $this->getActivSchema()->getName(), $restrictionList);
-        }
+		$propertyList = self::setDefault('DataSourceInfo', $this->dataSourceInfo, $propertyList);
+		$propertyList = self::setDefault('Catalog', $this->catalogName, $propertyList);
+        $restrictionList = self::setDefault('SCHEMA_NAME', $this->schemaName, $restrictionList);
 		
 		$result = $this->getSoapAdaptator()->discover('MDSCHEMA_MEASURES', $propertyList, $restrictionList);
 		
@@ -345,8 +278,8 @@ class Connection  implements ConnectionInterface
 	{
 		$propertyList = self::setDefault('Format', 'Multidimensional', $propertyList);
 		$propertyList = self::setDefault('AxisFormat', 'TupleFormat', $propertyList);
-		$propertyList = self::setDefault('DataSourceInfo', $this->getActivDatabase()->getDataSourceInfo(), $propertyList);
-		$propertyList = self::setDefault('Catalog', $this->getActivCatalog()->getName(), $propertyList);
+		$propertyList = self::setDefault('DataSourceInfo', $this->dataSourceInfo, $propertyList);
+		$propertyList = self::setDefault('Catalog', $this->catalogName, $propertyList);
 
 		$resultSet = new resultSet();
 		$resultSet->hydrate($this->getSoapAdaptator()->execute($mdx, $propertyList));
@@ -355,11 +288,12 @@ class Connection  implements ConnectionInterface
 
 	public static function setDefault($key, $default, Array $array = null)
 	{
-		
-		$array = $array ? $array : array();
-		if (!array_key_exists($key, $array)) {
-			$array[$key] = $default;
-		}
+	    $array = $array ? $array : array();
+	    if ($default) {
+    		if (!array_key_exists($key, $array)) {
+    			$array[$key] = $default;
+    		}
+	    }
 		return $array;
 	}
 	

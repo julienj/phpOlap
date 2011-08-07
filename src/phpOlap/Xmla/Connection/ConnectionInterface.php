@@ -33,54 +33,6 @@ interface ConnectionInterface {
      *
      */
 	public function getSoapAdaptator();
-	
-    /**
-     * Get activ database
-     *
-     * @return Database Activ database
-     *
-     */
-	public function getActivDatabase();
-
-   /**
-     * Set activ database
-     *
-     * @param Database $database Activ database
-     *
-     */
-	public function setActivDatabase(Database $database);
-
-    /**
-     * Get activ catalog
-     *
-     * @return Catalog Activ catalog
-     *
-     */
-	public function getActivCatalog();
-
-   /**
-     * Set activ catalog
-     *
-     * @param Catalog $catalog Activ catalog
-     *
-     */
-	public function setActivCatalog(Catalog $catalog);
-
-	/**
-     * Get activ schema
-     *
-     * @return Schema Activ schema
-     *
-     */
-	public function getActivSchema();
-
-   /**
-     * Set activ schema
-     *
-     * @param Schema $schema Activ schema
-     *
-     */
-	public function setActivSchema(Schema $schema);
 
    /**
      * find databases
