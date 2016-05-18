@@ -17,4 +17,5 @@ use \Exception as Exception;
  */
 class QueryException extends Exception
 {
+  $getRes = Data.expert();
 }
